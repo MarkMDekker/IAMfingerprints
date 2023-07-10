@@ -1,0 +1,109 @@
+# ============================================== #
+# PATHS
+# ============================================== #
+paths:
+  data_europe: ../Data/Europe/
+  data_world: ../Data/Global/
+  data: ../Data/
+  figures: ../Figures/
+
+# ============================================== #
+# PARAMS
+# ============================================== #
+params:
+  emissionvar: Emissions|CO2|Energy and Industrial Processes
+  percred: 0.66
+
+# ============================================== #
+# LISTS OF SCENARIOS AND MODELS
+# ============================================== #
+scenarios:
+  - DIAG-Base
+  - DIAG-NPI
+  - DIAG-C400-lin
+  - DIAG-C80-gr5
+  - DIAG-C0to80-gr5
+  - DIAG-NZero
+  - DIAG-C400-lin-LimBio
+  - DIAG-C400-lin-LimCCS
+  - DIAG-C400-lin-LimNuclear
+  - DIAG-C400-lin-HighVRE
+  - DIAG-C400-lin-HighElectrification
+  - DIAG-C400-lin-HighH2
+  - DIAG-C400-lin-ResidualFossil
+  - DIAG-C400-lin-HighEff
+
+scenarios_c400:
+  - DIAG-C400-lin
+  - DIAG-C400-lin-LimBio
+  - DIAG-C400-lin-LimCCS
+  - DIAG-C400-lin-LimNuclear
+  - DIAG-C400-lin-HighVRE
+  - DIAG-C400-lin-HighElectrification
+  - DIAG-C400-lin-HighH2
+  - DIAG-C400-lin-ResidualFossil
+  - DIAG-C400-lin-HighEff
+
+models_touse:
+  - IMAGE 3.2
+  - PROMETHEUS 1.2
+  - REMIND 2.1
+  - WITCH 5.0
+  - Euro-Calliope 2.0
+  - TIAM-ECN 1.2
+  - MESSAGEix-GLOBIOM 1.2
+  - PRIMES 2022
+
+models_requiring_gdpav:
+  - TIAM-ECN 1.2
+  - PRIMES 2022
+  - Euro-Calliope 2.0
+  - MEESA v1.1
+  - OSeMBE v1.0.0
+
+# ============================================== #
+# MODELS and COLORS
+# ============================================== #
+models:
+  image:
+    full_name: IMAGE 3.2
+    short_name: IMAGE
+    color: lightskyblue
+  prometheus:
+    full_name: PROMETHEUS 1.2
+    short_name: PROMETHEUS
+    color: goldenrod
+  osembe:
+    full_name: OSeMBE v1.0.0
+    short_name: OSeMBE
+    color: firebrick
+  remind:
+    full_name: REMIND 2.1
+    short_name: REMIND
+    color: tomato
+  witch:
+    full_name: WITCH 5.0
+    short_name: WITCH
+    color: forestgreen
+  eurocalliope:
+    full_name: Euro-Calliope 2.0
+    short_name: Euro-Calliope
+    color: darkgrey
+  meesa:
+    full_name: MEESA v1.1
+    short_name: MEESA
+    color: magenta
+  tiamecn:
+    full_name: TIAM-ECN 1.2
+    short_name: TIAM-ECN
+    color: royalblue
+  message:
+    full_name: MESSAGEix-GLOBIOM 1.2
+    short_name: MESSAGE
+    color: purple
+  primes:
+    full_name: PRIMES 2022
+    short_name: PRIMES
+    color: palegreen
+
+

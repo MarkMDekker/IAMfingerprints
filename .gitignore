@@ -1,3 +1,7 @@
+# Own stuff
+Data/*
+Figures/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
