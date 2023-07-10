@@ -1,6 +1,7 @@
 # Own stuff
 Data/*
 Figures/*
+Old/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
