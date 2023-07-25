@@ -133,23 +133,35 @@ class calculator:
         #       S2       #
         # ============== #
         initial = np.array(self.dummy_xr.sel(Variable = self.settings['params']['emissionvar'],
-                                             Scenario="DIAG-NPI",
-                                             Time=np.arange(2020, 2101)).Value)
+                                                Scenario="DIAG-NPI",
+                                                Time=np.arange(2020, 2101),
+                                            Region=['Europe', 'World']).Value)
         series = np.array(self.dummy_xr.sel(Variable = self.settings['params']['emissionvar'],
                                             Scenario=self.settings['scenarios_c400'],
-                                            Time=np.arange(2020, 2101)).Value)
-        years = np.zeros(shape=(len(self.settings['scenarios_c400']), len(self.list_of_models)))
+                                            Time=np.arange(2020, 2101),
+                                            Region=['Europe', 'World']).Value)
+        years = np.zeros(shape=(len(self.settings['scenarios_c400']),
+                                len(self.list_of_models),
+                                2))
         for m_i, m in enumerate(self.dummy_xr.Model):
             for s_i, s in enumerate(self.settings['scenarios_c400']):
-                wh = np.where(series[m_i, s_i] < initial[m_i]*(1-self.percred))[1]
+                wh_tot = np.where(series[m_i, s_i] < initial[m_i]*(1-self.percred))
+                
+                wh = wh_tot[1][wh_tot[0]==0]
                 if len(wh)>0:
-                    years[s_i, m_i] = np.arange(2020, 2101)[wh[0]]-2020
+                    years[s_i, m_i, 0] = np.arange(2020, 2101)[wh[0]]-2020
                 else:
-                    years[s_i, m_i] = np.nan
+                    years[s_i, m_i, 0] = np.nan
+                wh = wh_tot[1][wh_tot[0]==1]
+                if len(wh)>0:
+                    years[s_i, m_i, 1] = np.arange(2020, 2101)[wh[0]]-2020
+                else:
+                    years[s_i, m_i, 1] = np.nan
         self.years = years
         self.dummy_xr = self.dummy_xr.assign(S2_time = xr.DataArray(data=years,
                                                                     coords=dict(Scenario=self.settings['scenarios_c400'],
-                                                                                Model=self.dummy_xr.Model)))
+                                                                                Model=self.dummy_xr.Model,
+                                                                                Region=['Europe', 'World'])))
         
         # ============== #
         #       S3       #
@@ -187,10 +199,7 @@ class calculator:
             for P_i, P in enumerate(Ps):
                 var_prim[m_i, P_i] = (P.sel(Model=m,
                                             Scenario=self.settings['scenarios_c400'],
-                                            Time=np.arange(2020, 2101)) /
-                                      P.sel(Model=m,
-                                            Scenario=self.settings['scenarios_c400'],
-                                            Time=np.arange(2020, 2101)).mean(dim="Scenario")).var(dim="Scenario")
+                                            Time=np.arange(2020, 2101))).var(dim='Scenario')
         sens_prim = np.nanmean(var_prim, axis=1)
         self.dummy_xr = self.dummy_xr.assign(S4_sensprim = xr.DataArray(data=sens_prim,
                                                                         coords=dict(Model=self.dummy_xr.Model,
@@ -207,12 +216,9 @@ class calculator:
         var_dem = np.zeros(shape=(len(self.dummy_xr.Model), len(Es), 2, len(np.arange(2020, 2101))))+np.nan
         for m_i, m in enumerate(self.dummy_xr.Model):
             for E_i, E in enumerate(Es):
-                var_dem[m_i, E_i] = (E.sel(Model=m,
+                var_dem[m_i, E_i] = E.sel(Model=m,
                                            Scenario=self.settings['scenarios_c400'],
-                                           Time=np.arange(2020, 2101)) /
-                                     E.sel(Model=m,
-                                           Scenario=self.settings['scenarios_c400'],
-                                           Time=np.arange(2020, 2101)).mean(dim="Scenario")).var(dim="Scenario")
+                                           Time=np.arange(2020, 2101)).var(dim="Scenario")
         sens_dem = np.nanmean(var_dem, axis=1)
         self.dummy_xr = self.dummy_xr.assign(S5_sensdem = xr.DataArray(data=sens_dem, coords=dict(Model=self.dummy_xr.Model,
                                                                                                   Region=['Europe', 'World'],
@@ -325,16 +331,24 @@ class calculator:
         # ============== #
         #       C1       #
         # ============== #
-        self.dummy_xr = self.dummy_xr.assign(C1_cost = self.dummy_xr.sel(Variable="Policy Cost|Consumption Loss",
-                                                               Time=np.arange(2020, 2051),
-                                                               Scenario=self.settings['scenarios_c400']).Value.sum(dim=["Time"], skipna=False) /
-                                                      (self.dummy_xr.sel(Variable="Price|Carbon",
+
+        policy_cost_diff = (self.data_xr.sel(Variable=["Policy Cost|Consumption Loss",
+                                                        "Policy Cost|Additional Total Energy System Cost"],
+                                                Time=np.arange(2020, 2051),
+                                                Scenario=self.settings['scenarios_c400']).sum(dim=["Time"],skipna=False) - 
+                            self.data_xr.sel(Variable=["Policy Cost|Consumption Loss",
+                                                    "Policy Cost|Additional Total Energy System Cost"],
+                                                Time=np.arange(2020, 2051),
+                                                Scenario="DIAG-NPI").sum(dim=["Time"])).max(dim=['Variable'])
+
+        self.dummy_xr = self.dummy_xr.assign(C1_cost = policy_cost_diff.Value /
+                                                      (self.data_xr.sel(Variable="Price|Carbon",
                                                                Time=np.arange(2020, 2051),
                                                                Scenario=self.settings['scenarios_c400']).Value.mean(dim="Time") *
-                                                      (self.dummy_xr.sel(Variable=self.settings['params']['emissionvar'],
+                                                      (self.data_xr.sel(Variable=self.settings['params']['emissionvar'],
                                                                Time=2020,
                                                                Scenario=self.settings['scenarios_c400']).Value -
-                                                       self.dummy_xr.sel(Variable=self.settings['params']['emissionvar'],
+                                                       self.data_xr.sel(Variable=self.settings['params']['emissionvar'],
                                                                Time=2050,
                                                                Scenario=self.settings['scenarios_c400']).Value)))
         
