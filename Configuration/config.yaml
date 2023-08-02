@@ -2,10 +2,18 @@
 # PATHS
 # ============================================== #
 paths:
-  data_europe: ../Data/Europe/
-  data_world: ../Data/Global/
-  data: ../Data/
+  data:
+    handling: ../Data/Handling/
+    output: ../Data/Output/
   figures: ../Figures/
+
+# ============================================== #
+# DATABASE
+# ============================================== #
+database:
+  name: 'ecemf_internal'
+  username: 'none'
+  password: 'none'
 
 # ============================================== #
 # PARAMS
@@ -15,7 +23,7 @@ params:
   percred: 0.66
 
 # ============================================== #
-# LISTS OF SCENARIOS AND MODELS
+# LISTS OF SCENARIOS, REGIONS AND MODELS
 # ============================================== #
 scenarios:
   - DIAG-Base
@@ -43,6 +51,13 @@ scenarios_c400:
   - DIAG-C400-lin-HighH2
   - DIAG-C400-lin-ResidualFossil
   - DIAG-C400-lin-HighEff
+
+region_order:
+  - EU27 & UK (*)
+  - EU27 & UK
+  - Europe (excl. Turkey)
+  - Europe
+  - Europe (incl. Turkey)
 
 models_touse:
   - IMAGE 3.2
@@ -105,5 +120,3 @@ models:
     full_name: PRIMES 2022
     short_name: PRIMES
     color: palegreen
-
-

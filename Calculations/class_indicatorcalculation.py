@@ -1,10 +1,6 @@
-# ======================================== #
-# Class for the effort sharing work of ECEMF WP5
-# ======================================== #
-
 # =========================================================== #
 # PREAMBULE
-# Put in packages that we need
+# Packages that we need
 # =========================================================== #
 
 from pathlib import Path
@@ -15,89 +11,13 @@ import xarray as xr
 import yaml
 
 # =========================================================== #
-# CLASS OBJECT ON READING THE ECEMF CSV FILES 
+# CLASS OBJECT
 # =========================================================== #
 
-class ecemf_reader:
-    def __init__(self):
-        with open("../Configuration/config.yaml", "r") as stream:
-            self.settings = yaml.load(stream, Loader=yaml.Loader)
-        self.list_of_models = [self.settings['models'][m]['full_name'] for m in self.settings['models'].keys()]
-        self.list_of_colors = [self.settings['models'][m]['color'] for m in self.settings['models'].keys()]
-    
-    def read_csv_files(self):
-        self.pd_mod = pd.read_csv(self.settings['paths']['data_europe']+self.list_of_models[0]+'.csv')
-        for m_i, m in enumerate(self.list_of_models[1:]):
-            self.pd_mod = pd.concat([self.pd_mod, pd.read_csv(self.settings['paths']['data_europe']+m+'.csv')])
-        self.pd_mod = self.pd_mod.reset_index(drop=True)
-        self.pd_mod['Region'] = 'Europe'
-        for m_i, m in enumerate(self.list_of_models):
-            self.pd_mod = pd.concat([self.pd_mod, pd.read_csv(self.settings['paths']['data_world']+m+'.csv')])
-        self.pd_mod = self.pd_mod.reset_index(drop=True)
-    
-    def add_average_gdps(self):
-        # Remove GDP data from respective models (nulls/nans)
-        for m_i, m in enumerate(self.settings['models_requiring_gdpav']):
-            self.pd_mod = self.pd_mod.drop(self.pd_mod[(self.pd_mod.Variable == 'GDP|PPP') & (self.pd_mod.Model == m)].index)
-            self.pd_mod = self.pd_mod.reset_index(drop=True)
+class IndicatorCalculation:
+    ''' Class object that computes the diagnostic indicators based
+    on the output of class_datahandling.py '''
 
-        # Compute GDP averages per model
-        av_gdp = np.array(self.pd_mod[self.pd_mod.Variable == 'GDP|PPP'])[:, 5:]
-        time = self.pd_mod.keys()[5:].astype(int)
-        mods_gdp = []
-        av_gdp_permodel = {}
-        all_gdpsw = []
-        all_gdpse = []
-        for m_i, m in enumerate(self.list_of_models):
-            try:
-                ag = (np.array(self.pd_mod[(self.pd_mod.Variable == 'GDP|PPP') & (self.pd_mod.Model == m) & (self.pd_mod.Region == 'Europe')])[:, 5:]).mean(axis=0)
-                if np.nansum(ag) > 0:
-                    av_gdp_permodel[m] = ag
-                    mods_gdp.append(m)
-                    all_gdpse.append(ag)
-            except:
-                3
-            try:
-                ag = (np.array(self.pd_mod[(self.pd_mod.Variable == 'GDP|PPP') & (self.pd_mod.Model == m) & (self.pd_mod.Region == 'World')])[:, 5:]).mean(axis=0)
-                if np.nansum(ag) > 0:
-                    all_gdpsw.append(ag)
-            except:
-                3
-        
-        # Overall GDP average
-        av_gdp = np.zeros(shape = (len(all_gdpse[0]), 2))
-        for t_i in range(len(all_gdpse[0])):
-            av_gdp[t_i, 0] = np.nanmean(np.array(all_gdpse)[:, t_i].astype(float))
-        for t_i in range(len(all_gdpse[0])):
-            av_gdp[t_i, 1] = np.nanmean(np.array(all_gdpsw)[:, t_i].astype(float))
-
-        # Add to dataframe
-        rows = []
-        for s_i, s in enumerate(self.settings['scenarios']):
-            for m_i, m in enumerate(self.settings['models_requiring_gdpav']):
-                rows.append([m, s, 'Europe', "GDP|PPP", "billion EUR_2020/yr"]+list(av_gdp.T[0]))
-                rows.append([m, s, 'World', "GDP|PPP", "billion EUR_2020/yr"]+list(av_gdp.T[1]))
-        df_rows = pd.DataFrame(rows, columns = ["Model", "Scenario", "Region", "Variable", "Unit"]+list(time.astype(str)))
-        self.pd_mod = pd.concat([self.pd_mod, df_rows])
-        self.pd_mod = self.pd_mod.reset_index(drop=True)
-    
-    def convert_to_xr(self):
-        dummy_ = self.pd_mod.drop(['Unit'], axis=1)
-        dummy_ = dummy_[dummy_.Scenario != '<dummy>']
-        dummy_ = dummy_.melt(id_vars=["Model", "Scenario", "Variable", "Region"], var_name="Time", value_name="Value")
-        dummy_['Time'] = np.array(dummy_['Time']).astype(int)
-        dummy_ = dummy_.reset_index(drop=True)
-        dummy_ = dummy_.set_index(["Model", "Scenario", "Variable", "Region", "Time"])
-        self.data_xr = xr.Dataset.from_dataframe(dummy_)
-        self.data_xr = self.data_xr.reindex(Time = np.arange(1995, 2101))
-        self.data_xr = self.data_xr.interpolate_na(dim="Time", method="linear")
-        self.data_xr.to_netcdf(self.settings['paths']['data'] + "XRdata.nc")
-
-# =========================================================== #
-# CLASS OBJECT ON CALCULATING THE DIAGNOSTIC INDICATORS
-# =========================================================== #
-
-class calculator:
     def __init__(self, data_xr):
         self.data_xr = data_xr
         with open("../Configuration/config.yaml", "r") as stream:
@@ -419,4 +339,4 @@ class calculator:
         self.ind_xr = xr.Dataset.from_dataframe(dummy_)
     
     def export_indicators_to_netcdf(self):
-        self.ind_xr.to_netcdf(self.settings['paths']['data'] + "XRindicators.nc")
+        self.ind_xr.to_netcdf(self.settings['paths']['data']['output'] + "XRindicators.nc")
