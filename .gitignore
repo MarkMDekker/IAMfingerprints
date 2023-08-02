@@ -1,7 +1,7 @@
 # Own stuff
-Data/*
+Data/Old/*
 Figures/*
-Old/*
+Calculations/Preprocessor_internal_data.ipynb
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
