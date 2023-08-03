@@ -1,11 +1,14 @@
 # IAMfingerprints
-Suite for calculating model diagnostics and computing model fingerprint diagrams
+Suite for energy model diagnostics
 
-# Code description
-In [config.yaml](Configuration/config.yaml), you can set general settings for the calculations. For example, if a model or scenario should be added or removed from the analysis, this can be done there. This repository is currently still dependent on data is that is downloaded from the ECEMF internal database via the `pyam` API, which I in turn sort by model in separate CSV files. The `ecemf_reader` class in the [Classes.py](Calculating/Classes.py) script in turn changes those files into a netcdf file that is used in the `calculator` class (also in [Classes.py](Calculating/Classes.py)).
+## Introduction
+The code in this repository reads in scenario output of eight energy models (most of which are integrated assessment models) from the [ECEMF](https://www.ecemf.eu/) project. These scenarios are tailored to be diagnostic and reveal model behavior.
 
-# User guide
-Currently, if a user would like to add their model, it would be via the ECEMF database. The step to work on is the data management after that, which should be following more directly from the ECEMF database to the netcdf that is used in the `calculator` class (currently, as mentioned, it's done via CSV I created in a different script). Then, a user would really only upload their data, add their model name in `config.yaml`, and it would be included. Also, the user-friendliness of the plotting should be improved.
+## Data
+Information on the scenarios can be found publicly on Zenodo, both the [dataset](https://zenodo.org/record/7634845) and the [protocol](https://doi.org/10.5281/zenodo.6782373). In our code, we read in the scenario data automatically from the IIASA database, using the `pyam` package. No credentials are needed for the public version of this database. To obtain the up-to-date ECEMF internal database, the user can adapt the `config.ini` file.
 
-# Licences, citations and stuff (need some help with this)
-Whenever you use this code, please make sure to refer to our paper: https://www.researchsquare.com/article/rs-2638588/v1 (preprint, currently under review).
+## Usage
+In [`config.yaml`](Configuration/config.yaml), you can set general settings for the calculations. The file [`Main.ipynb`](Calculations/Main.ipynb) first initializes class `class_indicatorcalculation.py` that downloads the scenario data and reformats this into a netcdf file called [`XRdata.nc`](Data/Handling/XRdata.nc), accessible and saved into the Data directory. Subsequently, in [`Main.ipynb`](Calculations/Main.ipynb), the class `class_indicatorcalculation.py` computes the diagnostic indicators from this netcdf file, producing another netcdf file [`XRindicators.nc`](Data/Output/XRindicators.nc), which includes all indicators by model and scenario. The plotting scripts can be found in the Plotting directory, and they read the aforementioned netcdf files, storing the figures in the Figures directory.
+
+## References
+Whenever you use this code, please make sure to refer to our paper: https://www.researchsquare.com/article/rs-2638588/v1.
