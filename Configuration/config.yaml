@@ -26,12 +26,8 @@ params:
 # LISTS OF SCENARIOS, REGIONS AND MODELS
 # ============================================== #
 scenarios:
-  - DIAG-Base
   - DIAG-NPI
   - DIAG-C400-lin
-  - DIAG-C80-gr5
-  - DIAG-C0to80-gr5
-  - DIAG-NZero
   - DIAG-C400-lin-LimBio
   - DIAG-C400-lin-LimCCS
   - DIAG-C400-lin-LimNuclear

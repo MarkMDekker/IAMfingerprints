@@ -91,7 +91,7 @@ class DataHandling:
         ar_regions = np.array(self.pd_mod.region)
         ar_scenarios = np.array(self.pd_mod.scenario)
         ar_times = self.pd_mod.year
-        time = np.array(self.pd_mod[(ar_variables == 'GDP|PPP') & (ar_models == "REMIND 2.1") & (ar_regions == 'Europe') & (ar_scenarios == s)].year)
+        time = np.unique(self.pd_mod.year)
 
         gdp_over_time_eu_allmods = []
         gdp_over_time_w_allmods = []

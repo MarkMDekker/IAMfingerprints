@@ -256,11 +256,13 @@ class IndicatorCalculation:
         # ============== #
 
         policy_cost_diff = (self.data_xr.sel(Variable=["Policy Cost|Consumption Loss",
-                                                        "Policy Cost|Additional Total Energy System Cost"],
+                                                       "Policy Cost|Area under MAC Curve",
+                                                       "Policy Cost|Additional Total Energy System Cost"],
                                                 Time=np.arange(2020, 2051),
                                                 Scenario=self.settings['scenarios_c400']).sum(dim=["Time"],skipna=False) - 
                             self.data_xr.sel(Variable=["Policy Cost|Consumption Loss",
-                                                    "Policy Cost|Additional Total Energy System Cost"],
+                                                       "Policy Cost|Area under MAC Curve",
+                                                       "Policy Cost|Additional Total Energy System Cost"],
                                                 Time=np.arange(2020, 2051),
                                                 Scenario="DIAG-NPI").sum(dim=["Time"])).max(dim=['Variable'])
 
