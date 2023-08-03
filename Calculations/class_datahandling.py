@@ -78,16 +78,6 @@ class DataHandling:
         regs[regs != 'World'] = 'Europe'
         self.pd_mod.region = regs
 
-    # def read_csv_files(self):
-    #     self.pd_mod = pd.read_csv(self.settings['paths']['data_europe']+self.list_of_models[0]+'.csv')
-    #     for m_i, m in enumerate(self.list_of_models[1:]):
-    #         self.pd_mod = pd.concat([self.pd_mod, pd.read_csv(self.settings['paths']['data_europe']+m+'.csv')])
-    #     self.pd_mod = self.pd_mod.reset_index(drop=True)
-    #     self.pd_mod['Region'] = 'Europe'
-    #     for m_i, m in enumerate(self.list_of_models):
-    #         self.pd_mod = pd.concat([self.pd_mod, pd.read_csv(self.settings['paths']['data_world']+m+'.csv')])
-    #     self.pd_mod = self.pd_mod.reset_index(drop=True)
-
     def add_average_gdps(self):
         # Remove GDP data from respective models (nulls/nans)
         for m_i, m in enumerate(self.settings['models_requiring_gdpav']):

@@ -18,12 +18,15 @@ class IndicatorCalculation:
     ''' Class object that computes the diagnostic indicators based
     on the output of class_datahandling.py '''
 
-    def __init__(self, data_xr):
+    def __init__(self, data_xr, extra_mod = []):
         self.data_xr = data_xr
         with open("../Configuration/config.yaml", "r") as stream:
             self.settings = yaml.load(stream, Loader=yaml.Loader)
         self.list_of_models = [self.settings['models'][m]['full_name'] for m in self.settings['models'].keys()]
         self.list_of_colors = [self.settings['models'][m]['color'] for m in self.settings['models'].keys()]
+        if len(extra_mod) > 0:
+            self.list_of_models = self.list_of_models+extra_mod
+            self.list_of_colors = self.list_of_colors+['brown']
         self.percred = float(self.settings['params']['percred'])
     
     def calculate_responsiveness_indicators(self):
@@ -86,9 +89,9 @@ class IndicatorCalculation:
         # ============== #
         #       S3       #
         # ============== #
-        series = np.array(self.dummy_xr.sel(Variable = self.settings['params']['emissionvar'],
+        series = self.dummy_xr.sel(Variable = self.settings['params']['emissionvar'],
                                     Scenario=self.settings['scenarios_c400'],
-                                    Time=np.arange(2020, 2051)).Value)
+                                    Time=np.arange(2020, 2051)).Value
         speed = np.zeros(shape=(len(self.settings['scenarios_c400']),
                                 len(self.list_of_models),
                                 2,
@@ -99,7 +102,7 @@ class IndicatorCalculation:
             for s_i, s in enumerate(self.settings['scenarios_c400']):
                 for t_i, t in enumerate(np.arange(2020, 2051)):
                     if t_i != 0:
-                        speed[s_i, m_i, :, t_i] = series[m_i, s_i, :, t_i-1] - series[m_i, s_i, :, t_i]
+                        speed[s_i, m_i, :, t_i] = series[m_i, s_i, :, t_i-1] - series[m_i, s_i, :, t_i] #np.array(series.sel(Model=m, Scenario=s, Time=t-1) - series.sel(Model=m, Scenario=s, Time=t-1))#
                 potentials[s_i, m_i] = np.nanmax(speed[s_i, m_i], axis=1)
         self.dummy_xr = self.dummy_xr.assign(S3_speedmax = xr.DataArray(data=potentials,
                                                                         coords=dict(Scenario=self.settings['scenarios_c400'],
