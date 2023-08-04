@@ -35,6 +35,9 @@ class DataHandling:
             if model == 'WITCH 5.0': # Remove ResidualFossil (old / erroneous scenario)
                 df_i = df_i[df_i.scenario != 'DIAG-C400-lin-ResidualFossil']
                 df_i = df_i.reset_index(drop=True)
+            if model == 'MESSAGEix-GLOBIOM 1.2': # Remove HighEff (old / erroneous scenario)
+                df_i = df_i[df_i.scenario != 'DIAG-C400-lin-HighEff']
+                df_i = df_i.reset_index(drop=True)
             if model == 'Euro-Calliope 2.0' or model == 'PRIMES 2022': # Obtain NPI from the base scenario
                 df_i2 = df_i[df_i.scenario == 'DIAG-NPI']
                 df_i2.scenario = 'DIAG-Base'
