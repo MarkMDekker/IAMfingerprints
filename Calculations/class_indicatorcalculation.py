@@ -31,9 +31,9 @@ class IndicatorCalculation:
     
     def calculate_responsiveness_indicators(self):
         # ============== #
-        #       S1       #
+        #       R1       #
         # ============== #
-        self.dummy_xr = self.data_xr.assign(S1_rai = (self.data_xr.sel(Variable = self.settings['params']['emissionvar'],
+        self.dummy_xr = self.data_xr.assign(R1_rai = (self.data_xr.sel(Variable = self.settings['params']['emissionvar'],
                                                                       Scenario="DIAG-NPI",
                                                                       Time=2050).Value -
                                                      self.data_xr.sel(Variable = self.settings['params']['emissionvar'],
@@ -42,7 +42,7 @@ class IndicatorCalculation:
                                                      self.data_xr.sel(Variable = self.settings['params']['emissionvar'],
                                                                        Scenario="DIAG-NPI",
                                                                        Time=2050).Value)
-        self.dummy_xr = self.dummy_xr.assign(S1s_rai = (self.data_xr.sel(Variable = self.settings['params']['emissionvar'],
+        self.dummy_xr = self.dummy_xr.assign(R1s_rai = (self.data_xr.sel(Variable = self.settings['params']['emissionvar'],
                                                                             Scenario="DIAG-NPI",
                                                                             Time=[2017, 2018, 2019, 2020, 2021]).Value.mean(dim='Time') -
                                                         self.data_xr.sel(Variable = self.settings['params']['emissionvar'],
@@ -53,7 +53,7 @@ class IndicatorCalculation:
                                                                             Time=[2017, 2018, 2019, 2020, 2021]).Value.mean(dim='Time'))
         
         # ============== #
-        #       S2       #
+        #       R2       #
         # ============== #
         initial = np.array(self.dummy_xr.sel(Variable = self.settings['params']['emissionvar'],
                                                 Scenario="DIAG-NPI",
@@ -81,13 +81,13 @@ class IndicatorCalculation:
                 else:
                     years[s_i, m_i, 1] = np.nan
         self.years = years
-        self.dummy_xr = self.dummy_xr.assign(S2_time = xr.DataArray(data=years,
+        self.dummy_xr = self.dummy_xr.assign(R2_time = xr.DataArray(data=years,
                                                                     coords=dict(Scenario=self.settings['scenarios_c400'],
                                                                                 Model=self.dummy_xr.Model,
                                                                                 Region=['Europe', 'World'])))
         
         # ============== #
-        #       S3       #
+        #       R3       #
         # ============== #
         series = self.dummy_xr.sel(Variable = self.settings['params']['emissionvar'],
                                     Scenario=self.settings['scenarios_c400'],
@@ -104,13 +104,13 @@ class IndicatorCalculation:
                     if t_i != 0:
                         speed[s_i, m_i, :, t_i] = series[m_i, s_i, :, t_i-1] - series[m_i, s_i, :, t_i] #np.array(series.sel(Model=m, Scenario=s, Time=t-1) - series.sel(Model=m, Scenario=s, Time=t-1))#
                 potentials[s_i, m_i] = np.nanmax(speed[s_i, m_i], axis=1)
-        self.dummy_xr = self.dummy_xr.assign(S3_speedmax = xr.DataArray(data=potentials,
+        self.dummy_xr = self.dummy_xr.assign(R3_speedmax = xr.DataArray(data=potentials,
                                                                         coords=dict(Scenario=self.settings['scenarios_c400'],
                                                                                     Model=self.dummy_xr.Model,
                                                                                     Region=['Europe', 'World'])))
     
         # ============== #
-        #       S4       #
+        #       R4       #
         # ============== #
         energy_sources = ['Coal', 'Oil', 'Gas', 'Solar', 'Wind', 'Nuclear', 'Biomass']
         Ps = [self.dummy_xr.sel(Variable = "Primary Energy|"+i).Value / self.dummy_xr.sel(Variable = "Primary Energy").Value for i in energy_sources]
@@ -124,13 +124,13 @@ class IndicatorCalculation:
                                             Scenario=self.settings['scenarios_c400'],
                                             Time=np.arange(2020, 2101))).var(dim='Scenario')
         sens_prim = np.nanmean(var_prim, axis=1)
-        self.dummy_xr = self.dummy_xr.assign(S4_sensprim = xr.DataArray(data=sens_prim,
+        self.dummy_xr = self.dummy_xr.assign(R4_sensprim = xr.DataArray(data=sens_prim,
                                                                         coords=dict(Model=self.dummy_xr.Model,
                                                                                     Region=['Europe', 'World'],
                                                                                     Time=np.arange(2020, 2101))))
         
         # ============== #
-        #       S5       #
+        #       R5       #
         # ============== #
         E_ind = self.dummy_xr.sel(Variable = "Final Energy|Industry").Value
         E_trans = self.dummy_xr.sel(Variable = "Final Energy|Transportation").Value
@@ -143,7 +143,7 @@ class IndicatorCalculation:
                                            Scenario=self.settings['scenarios_c400'],
                                            Time=np.arange(2020, 2101)).var(dim="Scenario")
         sens_dem = np.nanmean(var_dem, axis=1)
-        self.dummy_xr = self.dummy_xr.assign(S5_sensdem = xr.DataArray(data=sens_dem, coords=dict(Model=self.dummy_xr.Model,
+        self.dummy_xr = self.dummy_xr.assign(R5_sensdem = xr.DataArray(data=sens_dem, coords=dict(Model=self.dummy_xr.Model,
                                                                                                   Region=['Europe', 'World'],
                                                                                                   Time=np.arange(2020, 2101))))
 
