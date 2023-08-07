@@ -1,5 +1,10 @@
 # IAMfingerprints
-Suite for energy model diagnostics
+Suite for energy model diagnostics. Latest release can be found on Zenodo:
+
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8220167.svg)](https://doi.org/10.5281/zenodo.8220167)
+
+
 
 ## Introduction
 The code in this repository reads in scenario output of eight energy models (most of which are integrated assessment models) from the [ECEMF](https://www.ecemf.eu/) project. These scenarios are tailored to be diagnostic and reveal model behavior. The analysis yields a set of diagnostic indicators and model fingerprint diagrams in which model behavior can be distinguished.
