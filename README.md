@@ -25,3 +25,6 @@ For modellers outside of ECEMF, it may be interesting to use this code and scena
 
 ## References
 Whenever you use this code, please make sure to refer to our paper: https://www.researchsquare.com/article/rs-2638588/v1.
+
+## Acknowledgments
+This work was financially supported by the European Union’s Horizon 2020 research and innovation programme under the grant agreement No [101022622](https://cordis.europa.eu/project/id/101022622) (European Climate and Energy Modelling Forum [ECEMF](https://ecemf.eu/)).
