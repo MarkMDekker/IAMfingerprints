@@ -21,11 +21,9 @@ For modellers outside of ECEMF, it may be interesting to use this code and scena
 </ol>
 
 ## References
-The preprint on Research Square is found under this DOI:
-https://www.researchsquare.com/article/rs-2638588/v1.
+The paper in Nature Energy can be found here (from Nov 6th and on): https://www.nature.com/articles/s41560-023-01399-1
 
-The paper in Nature Energy
-[![DOI](https://www.nature.com/articles/s41560-023-01399-1)](https://doi.org/10.1038/s41560-023-01399-1)
+The preprint on Research Square is found here: https://www.researchsquare.com/article/rs-2638588/v1
 
 ## Acknowledgments
 
