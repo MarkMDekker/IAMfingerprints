@@ -29,7 +29,11 @@ class DataHandling:
         if self.settings['database']['username'] != 'none':
             pyam.iiasa.set_config(self.settings['database']['username'], self.settings['database']['password'])
         pyam.iiasa.Connection(self.settings['database']['name'])
-        df = pyam.read_iiasa('ecemf_internal', model=self.list_of_models, scenario=self.settings['scenarios'])
+        df = pyam.read_iiasa('ecemf_internal',
+                            model=self.list_of_models,
+                            scenario=self.settings['scenarios'],
+                            region=self.settings['region_order']+['World'],
+                            variable=self.settings['required_variables'])
 
         def filters(df_i, model):
             if model == 'WITCH 5.0': # Remove ResidualFossil (old / erroneous scenario)
@@ -41,7 +45,7 @@ class DataHandling:
             if model == 'Euro-Calliope 2.0' or model == 'PRIMES 2022': # Obtain NPI from the base scenario
                 df_i2 = df_i[df_i.scenario == 'DIAG-NPI']
                 df_i2.scenario = 'DIAG-Base'
-                df_i = df_i.append(df_i2)
+                df_i = pd.concat([df_i, df_i2])
             if model == 'REMIND 2.1': # Remove Other electricity category
                 df_i = df_i[df_i.variable != 'Secondary Energy|Electricity|Other']
                 df_i = df_i.reset_index(drop=True)
@@ -66,7 +70,7 @@ class DataHandling:
                         dataframe_eu = pd.concat([dataframe_eu, df_afterfilters])
                 if a == 4:
                     a = -1
-        
+
         for model_i, model in enumerate(self.list_of_models):
             df_mod = df.filter(model=model, region = 'World').data
             df_afterfilters = filters(df_mod, model)
@@ -74,7 +78,7 @@ class DataHandling:
                 dataframe_world = df_afterfilters
             else:
                 dataframe_world = pd.concat([dataframe_world, df_afterfilters])
-        
+
         self.pd_mod = pd.concat([dataframe_eu, dataframe_world])
         self.pd_mod = self.pd_mod.reset_index(drop=True)
         regs = np.array(self.pd_mod.region)

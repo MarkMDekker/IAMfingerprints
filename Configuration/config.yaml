@@ -72,6 +72,34 @@ models_requiring_gdpav:
   - MEESA v1.1
   - OSeMBE v1.0.0
 
+required_variables:
+  - Emissions|CO2|Energy and Industrial Processes
+  - GDP|PPP
+  - Primary Energy
+  - Primary Energy|Solar
+  - Primary Energy|Wind
+  - Primary Energy|Coal
+  - Primary Energy|Oil
+  - Primary Energy|Gas
+  - Primary Energy|Nuclear
+  - Primary Energy|Biomass
+  - Final Energy
+  - Final Energy|Industry
+  - Final Energy|Transportation
+  - Final Energy|Residential and Commercial
+  - Carbon Capture
+  - Emissions|Kyoto Gases
+  - Emissions|CO2
+  - Final Energy|Transportation|Electricity
+  - Final Energy|Industry|Electricity
+  - Final Energy|Residential and Commercial|Electricity
+  - Emissions|CO2|Energy|Supply|Electricity
+  - Final Energy|Hydrogen
+  - Policy Cost|Consumption Loss
+  - Policy Cost|Area under MAC Curve
+  - Policy Cost|Additional Total Energy System Cost
+  - Price|Carbon
+
 # ============================================== #
 # MODELS and COLORS
 # ============================================== #
