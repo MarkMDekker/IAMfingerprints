@@ -2,6 +2,7 @@
 Data/Old/*
 Calculations/process_image_example.ipynb
 Data/Own_model/IMAGE_example_raw.xlsx
+InteractiveFingerprinting/Data/elevate-internal_snapshot_*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
