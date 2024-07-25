@@ -100,3 +100,4 @@ class class_reading:
         xr_data_new = xr_data_new.where(xr_data_new != 0, np.nan)
         xr_data_new = xr_data_new.transpose('Model', 'Scenario', 'Region', 'Variable', 'Time')
         self.xr_data = xr_data_new
+        self.xr_data.to_netcdf("Data/xr_variables.nc")

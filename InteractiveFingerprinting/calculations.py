@@ -32,14 +32,11 @@ class class_calculation:
         #       R1       #
         # ============== #
         self.dummy_xr = self.xr_data.assign(R1_rai = (self.xr_data.sel(Variable = self.settings['params']['emissionvar'],
-                                                                      Scenario=self.curpol,
-                                                                      Time=2050).Value -
+                                                                      Scenario=self.curpol).Value -
                                                      self.xr_data.sel(Variable = self.settings['params']['emissionvar'],
-                                                                      Scenario=self.settings['scenarios'],
-                                                                      Time=2050).Value) /
+                                                                      Scenario=self.settings['scenarios']).Value) /
                                                      self.xr_data.sel(Variable = self.settings['params']['emissionvar'],
-                                                                       Scenario=self.curpol,
-                                                                       Time=2050).Value)
+                                                                       Scenario=self.curpol).Value)
         
         # ============== #
         #       R2       #
@@ -142,7 +139,7 @@ class class_calculation:
         self.dummy_xr = self.dummy_xr.assign(M1_cir = (CI.sel(Time = [2017, 2018, 2019, 2020, 2021],
                                                               Model=self.settings['models'],
                                                               Scenario=self.settings['scenarios']).mean(dim=["Time", "Model", "Scenario"]) -
-                                                       CI.sel(Time = 2050)) /
+                                                       CI) /
                                                        CI.sel(Time = [2017, 2018, 2019, 2020, 2021],
                                                               Model=self.settings['models'],
                                                               Scenario=self.settings['scenarios']).mean(dim=["Time", "Model", "Scenario"]))
@@ -154,7 +151,7 @@ class class_calculation:
         self.dummy_xr = self.dummy_xr.assign(M2_eir = (EI.sel(Time = [2017, 2018, 2019, 2020, 2021],
                                                               Model=self.settings['models'],
                                                               Scenario=self.settings['scenarios']).mean(dim=["Time", "Model", "Scenario"]) -
-                                                       EI.sel(Time = 2050)) /
+                                                       EI) /
                                                        EI.sel(Time = [2017, 2018, 2019, 2020, 2021],
                                                               Model=self.settings['models'],
                                                               Scenario=self.settings['scenarios']).mean(dim=["Time", "Model", "Scenario"]))
@@ -162,7 +159,7 @@ class class_calculation:
         # ============== #
         #       M3       #
         # ============== #
-        self.dummy_xr = self.dummy_xr.assign(M3_cc = self.dummy_xr.sel(Variable = "Carbon Capture", Time=2050).Value)
+        self.dummy_xr = self.dummy_xr.assign(M3_cc = self.dummy_xr.sel(Variable = "Carbon Capture").Value)
         
         # ============== #
         #       M4       #
@@ -182,61 +179,52 @@ class class_calculation:
         #    ES1-ES7     #
         # ============== #
         
-        self.dummy_xr = self.dummy_xr.assign(ES1_coal = self.dummy_xr.sel(Variable = "Primary Energy|Coal", Scenario=self.settings['scenarios'], Time=2050).Value / self.dummy_xr.sel(Variable = "Primary Energy", Scenario=self.settings['scenarios'], Time=2050).Value)
-        self.dummy_xr = self.dummy_xr.assign(ES2_oil = self.dummy_xr.sel(Variable = "Primary Energy|Oil", Scenario=self.settings['scenarios'], Time=2050).Value / self.dummy_xr.sel(Variable = "Primary Energy", Scenario=self.settings['scenarios'], Time=2050).Value)
-        self.dummy_xr = self.dummy_xr.assign(ES3_gas = self.dummy_xr.sel(Variable = "Primary Energy|Gas", Scenario=self.settings['scenarios'], Time=2050).Value / self.dummy_xr.sel(Variable = "Primary Energy", Scenario=self.settings['scenarios'], Time=2050).Value)
-        self.dummy_xr = self.dummy_xr.assign(ES4_solar = self.dummy_xr.sel(Variable = "Primary Energy|Solar", Scenario=self.settings['scenarios'], Time=2050).Value / self.dummy_xr.sel(Variable = "Primary Energy", Scenario=self.settings['scenarios'], Time=2050).Value)
-        self.dummy_xr = self.dummy_xr.assign(ES5_wind = self.dummy_xr.sel(Variable = "Primary Energy|Wind", Scenario=self.settings['scenarios'], Time=2050).Value / self.dummy_xr.sel(Variable = "Primary Energy", Scenario=self.settings['scenarios'], Time=2050).Value)
-        self.dummy_xr = self.dummy_xr.assign(ES6_biomass = self.dummy_xr.sel(Variable = "Primary Energy|Biomass", Scenario=self.settings['scenarios'], Time=2050).Value / self.dummy_xr.sel(Variable = "Primary Energy", Scenario=self.settings['scenarios'], Time=2050).Value)
-        self.dummy_xr = self.dummy_xr.assign(ES7_nuclear = self.dummy_xr.sel(Variable = "Primary Energy|Nuclear", Scenario=self.settings['scenarios'], Time=2050).Value / self.dummy_xr.sel(Variable = "Primary Energy", Scenario=self.settings['scenarios'], Time=2050).Value)
+        self.dummy_xr = self.dummy_xr.assign(ES1_coal = self.dummy_xr.sel(Variable = "Primary Energy|Coal", Scenario=self.settings['scenarios']).Value / self.dummy_xr.sel(Variable = "Primary Energy", Scenario=self.settings['scenarios']).Value)
+        self.dummy_xr = self.dummy_xr.assign(ES2_oil = self.dummy_xr.sel(Variable = "Primary Energy|Oil", Scenario=self.settings['scenarios']).Value / self.dummy_xr.sel(Variable = "Primary Energy", Scenario=self.settings['scenarios']).Value)
+        self.dummy_xr = self.dummy_xr.assign(ES3_gas = self.dummy_xr.sel(Variable = "Primary Energy|Gas", Scenario=self.settings['scenarios']).Value / self.dummy_xr.sel(Variable = "Primary Energy", Scenario=self.settings['scenarios']).Value)
+        self.dummy_xr = self.dummy_xr.assign(ES4_solar = self.dummy_xr.sel(Variable = "Primary Energy|Solar", Scenario=self.settings['scenarios']).Value / self.dummy_xr.sel(Variable = "Primary Energy", Scenario=self.settings['scenarios']).Value)
+        self.dummy_xr = self.dummy_xr.assign(ES5_wind = self.dummy_xr.sel(Variable = "Primary Energy|Wind", Scenario=self.settings['scenarios']).Value / self.dummy_xr.sel(Variable = "Primary Energy", Scenario=self.settings['scenarios']).Value)
+        self.dummy_xr = self.dummy_xr.assign(ES6_biomass = self.dummy_xr.sel(Variable = "Primary Energy|Biomass", Scenario=self.settings['scenarios']).Value / self.dummy_xr.sel(Variable = "Primary Energy", Scenario=self.settings['scenarios']).Value)
+        self.dummy_xr = self.dummy_xr.assign(ES7_nuclear = self.dummy_xr.sel(Variable = "Primary Energy|Nuclear", Scenario=self.settings['scenarios']).Value / self.dummy_xr.sel(Variable = "Primary Energy", Scenario=self.settings['scenarios']).Value)
     
     def calculate_energydemand_indicators(self):
         # ============== #
         #       ED1      #
         # ============== #
         self.dummy_xr = self.dummy_xr.assign(ED1_etrans = (self.dummy_xr.sel(Variable = "Final Energy|Transportation|Electricity",
-                                                                             Scenario=self.settings['scenarios'],
-                                                                             Time=2050).Value) /
+                                                                             Scenario=self.settings['scenarios']).Value) /
                                                            self.dummy_xr.sel(Variable="Final Energy|Transportation",
-                                                                             Scenario=self.settings['scenarios'],
-                                                                             Time=2050).Value)
+                                                                             Scenario=self.settings['scenarios']).Value)
 
         # ============== #
         #       ED2      #
         # ============== #
         self.dummy_xr = self.dummy_xr.assign(ED2_eindus = (self.dummy_xr.sel(Variable = "Final Energy|Industry|Electricity",
-                                                                             Scenario=self.settings['scenarios'],
-                                                                             Time=2050).Value) /
+                                                                             Scenario=self.settings['scenarios']).Value) /
                                                            self.dummy_xr.sel(Variable="Final Energy|Industry",
-                                                                             Scenario=self.settings['scenarios'],
-                                                                             Time=2050).Value)
+                                                                             Scenario=self.settings['scenarios']).Value)
         
         # ============== #
         #       ED3      #
         # ============== #
         self.dummy_xr = self.dummy_xr.assign(ED3_ebuild = (self.dummy_xr.sel(Variable = "Final Energy|Residential and Commercial|Electricity",
-                                                                             Scenario=self.settings['scenarios'],
-                                                                             Time=2050).Value) /
+                                                                             Scenario=self.settings['scenarios']).Value) /
                                                            self.dummy_xr.sel(Variable="Final Energy|Residential and Commercial",
-                                                                             Scenario=self.settings['scenarios'],
-                                                                             Time=2050).Value)
+                                                                             Scenario=self.settings['scenarios']).Value)
         
         # ============== #
         #       ED4      #
         # ============== #
         self.dummy_xr = self.dummy_xr.assign(ED4_emise = (self.dummy_xr.sel(Variable = "Emissions|CO2|Energy|Supply|Electricity",
-                                                                            Scenario=self.settings['scenarios'],
-                                                                            Time=2050).Value))
+                                                                            Scenario=self.settings['scenarios']).Value))
         
         # ============== #
         #       ED5      #
         # ============== #
         self.dummy_xr = self.dummy_xr.assign(ED5_hydrogen = (self.dummy_xr.sel(Variable = "Final Energy|Hydrogen",
-                                                                               Scenario=self.settings['scenarios'],
-                                                                               Time=2050).Value) /
+                                                                               Scenario=self.settings['scenarios']).Value) /
                                                              self.dummy_xr.sel(Variable="Final Energy",
-                                                                               Scenario=self.settings['scenarios'],
-                                                                               Time=2050).Value)
+                                                                               Scenario=self.settings['scenarios']).Value)
     
     def calculate_costandeffort_indicators(self):
         # ============== #
@@ -330,4 +318,4 @@ class class_calculation:
         dummy_ = dummy_.reset_index(drop=True)
         dummy_ = dummy_.set_index(["Model", "Scenario", "Region", "Indicator", "Time"])
         self.xr_ind = xr.Dataset.from_dataframe(dummy_)
-        self.xr_ind.to_netcdf("Data/XR_indicators.nc")
+        self.xr_ind.to_netcdf("Data/xr_indicators.nc")

@@ -12,6 +12,10 @@ import yaml
 import pyam
 import warnings
 import importlib
+import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import os
 warnings.filterwarnings("ignore")
 
 import reading
@@ -50,4 +54,6 @@ calculator.convert_to_indicator_xr()
 # PLOT RESULTS
 # =========================================================== #
 
-# plotter = class_plotting()
+plotter = class_plotting()
+plotter.plot_variables()
+plotter.plot_indicators()

@@ -3,7 +3,7 @@ Data/Old/*
 Calculations/process_image_example.ipynb
 Data/Own_model/IMAGE_example_raw.xlsx
 InteractiveFingerprinting/Data/elevate-internal_snapshot_*
-InteractiveFingerprinting/Data/XR_*
+InteractiveFingerprinting/Data/xr_*
 InteractiveFingerprinting/Figures/*
 
 # Byte-compiled / optimized / DLL files

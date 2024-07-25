@@ -29,6 +29,84 @@ params:
   curpol_scenario: ELV-SSP2-CP-D0
 
 # ============================================== #
+# INDICATORS, NAMES AND EXPLANATIONS
+# ============================================== #
+
+indicators:
+  R1_rai:
+    name: Relative abatement index
+    explanation: Relative change of CO<sub>2</sub> emissions
+  R2_time:
+    name: Time scale of carbon price response
+    explanation: Number of years before 66% reduction in CO<sub>2</sub> emissions between 2020 and 2050
+  R3_speedmax:
+    name: Maximum mitigation speed
+    explanation: Maximum of CO<sub>2</sub> emission reductions in 5-year increments between 2020 and 2050
+  R4_sensprim:
+    name: Sensitivity primary energy mix
+    explanation: Average (normalized) scenario variance in all primary energy carriers
+  R5_sensdem:
+    name: Sensitivity final energy consumption in demand sectors
+    explanation: Average (normalized) scenario variance in final energy demand across end-use sectors
+  M1_cir:
+    name: Carbon intensity reduction
+    explanation: Reduction in carbon intensity (i.e., CO<sub>2</sub> emissions per unit of final energy demand)
+  M2_eir:
+    name: Energy intensity reduction
+    explanation: Reduction in energy intensity (i.e., final energy demand per unit of GDP)
+  M3_cc:
+    name: Carbon capture
+    explanation: CO<sub>2</sub> emissions captured, including DAC, BECCS and fossil fuel use with carbon capture
+  M4_nonco2:
+    name: Role of non-CO<sub>2</sub> abatement
+    explanation: Non-CO<sub>2</sub> emissions reduction divided by CO<sub>2</sub> emission reduction (only from the energy sector)
+  ES1_coal:
+    name: Coal share in energy mix
+    explanation: Share of coal in primary energy supply
+  ES2_oil:
+    name: Oil share in energy mix
+    explanation: Share of oil in primary energy supply
+  ES3_gas:
+    name: Gas share in energy mix
+    explanation: Share of gas in primary energy supply
+  ES4_solar:
+    name: Solar share in energy mix
+    explanation: Share of solar energy in primary energy supply
+  ES5_wind:
+    name: Wind share in energy mix
+    explanation: Share of wind energy in primary energy supply
+  ES6_biomass:
+    name: Biomass share in energy mix
+    explanation: Share of biomass energy in primary energy supply
+  ES7_nuclear:
+    name: Nuclear share in energy mix
+    explanation: Share of nuclear energy in primary energy supply
+  ED1_etrans:
+    name: Electrification of transport
+    explanation: Share of electricity in final energy demand for transport
+  ED2_eindus:
+    name: Electrification of industry
+    explanation: Share of electricity in final energy demand for industry
+  ED3_ebuild:
+    name: Electrification of buildings
+    explanation: Share of electricity in final energy demand in the residential and commercial sector
+  ED4_emise:
+    name: Net electricity emissions
+    explanation: Net emissions from electricity generation, accounting for CCS
+  ED5_hydrogen:
+    name: Hydrogen use
+    explanation: Share of hydrogen in final energy use
+  C1_cost:
+    name: Cumulative costs per abatement value
+    explanation: Cumulative additional costs divided by the cumulative sum of carbon prices times the marginal CO<sub>2</sub> emission reductions (over period 2020-2050)
+  C2_ti:
+    name: Transformation index
+    explanation: Sum of absolute changes in primary energy carrier fraction between 2020 and 2050
+  C3_dem:
+    name: Demand shifts
+    explanation: Sum of absolute changes in final energy demand in end-use sectors between 2020 and 2050
+
+# ============================================== #
 # LISTS OF SCENARIOS, REGIONS, MODELS AND VARIABLES
 # ============================================== #
 scenarios:
