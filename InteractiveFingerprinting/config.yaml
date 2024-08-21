@@ -18,7 +18,7 @@ database:
   committed:
     name: committed_internal
   username: none
-  password: none
+  password: noneasd
 
 # ============================================== #
 # PARAMS
