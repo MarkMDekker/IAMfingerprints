@@ -5,6 +5,7 @@ Data/Own_model/IMAGE_example_raw.xlsx
 InteractiveFingerprinting/Data/elevate-internal_snapshot_*
 InteractiveFingerprinting/Data/xr_*
 InteractiveFingerprinting/Figures/*
+InteractiveFingerprinting/config.yaml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -166,3 +167,4 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+InteractiveFingerprinting/config.yaml
