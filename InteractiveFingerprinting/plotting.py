@@ -11,6 +11,7 @@ import xarray as xr
 import yaml
 import pyam
 import plotly.express as px
+import os
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
