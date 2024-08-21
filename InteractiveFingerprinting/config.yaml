@@ -8,19 +8,6 @@ paths:
   figures: ../Figures/
 
 # ============================================== #
-# DATABASE
-# ============================================== #
-database:
-  ecemf:
-    name: ecemf_internal
-  elevate:
-    name: elevate_internal
-  committed:
-    name: committed_internal
-  username: none
-  password: none
-
-# ============================================== #
 # PARAMS
 # ============================================== #
 params:
