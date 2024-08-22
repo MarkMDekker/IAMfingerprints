@@ -35,14 +35,14 @@ from plotting import class_plotting
 # =========================================================== #
 
 reader = class_reading()
+# reader.read_data_online()
 reader.read_data_local()
-reader.regional_aggregation()
 
 # =========================================================== #
 # COMPUTE INDICATORS
 # =========================================================== #
 
-calculator = class_calculation(reader.xr_data)
+calculator = class_calculation(xr.open_dataset('Data/xr_variables.nc'))
 calculator.calculate_responsiveness_indicators()
 calculator.calculate_mitigationstrategy_indicators()
 calculator.calculate_energysupply_indicators()
@@ -54,6 +54,6 @@ calculator.convert_to_indicator_xr()
 # PLOT RESULTS
 # =========================================================== #
 
-plotter = class_plotting()
-plotter.plot_variables()
-plotter.plot_indicators()
+# plotter = class_plotting()
+# plotter.plot_variables()
+# plotter.plot_indicators()

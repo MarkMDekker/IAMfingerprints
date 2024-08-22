@@ -16,13 +16,24 @@ params:
   curpol_scenario: ELV-SSP2-CP-D0
 
 # ============================================== #
+# DATABASE
+# ============================================== #
+database:
+  ecemf:
+    name: ecemf_internal
+  elevate:
+    name: elevate_internal
+  committed:
+    name: committed_internal
+
+# ============================================== #
 # INDICATORS, NAMES AND EXPLANATIONS
 # ============================================== #
 
 indicators:
   R1_rai:
     name: Relative abatement index
-    explanation: Relative change of CO<sub>2</sub> emissions
+    explanation: Relative change of CO<sub>2</sub> emissions compared to a current policies scenario
   R2_time:
     name: Time scale of carbon price response
     explanation: Number of years before 66% reduction in CO<sub>2</sub> emissions between 2020 and 2050
@@ -106,6 +117,11 @@ regions:
   - China
   - India
   - Indonesia
+  - Saudi-Arabia
+  - Viet Nam
+  - Pakistan
+  - Brazil
+  - Poland
   - Europe
 
 regional_mapping:
@@ -130,6 +146,43 @@ regional_mapping:
     - GCAM-CGS-ELEVATE|Indonesia
     - MESSAGEix-GLOBIOM 2.0|Other Pacific Asia
     - WITCH 5.0|Indonesia
+    - REMIND 3.3|Other Asia
+    - AIM/Hub-Global 2.4|Rest of East and South East Asia
+  Saudi-Arabia:
+    - IMAGE 3.3|Middle East
+    - GCAM-CGS-ELEVATE|Middle East
+    - MESSAGEix-GLOBIOM 2.0|Middle East and North Africa
+    - WITCH 5.0|Middle East and North Africa
+    - REMIND 3.3|Middle East and North Africa
+    - AIM/Hub-Global 2.4|Middle East
+  Viet Nam:
+    - IMAGE 3.3|South-East Asia
+    - GCAM-CGS-ELEVATE|Southeast Asia
+    - MESSAGEix-GLOBIOM 2.0|Rest of Centrally Planned Asia
+    - WITCH 5.0|South East Asia
+    - REMIND 3.3|Other Asia
+    - AIM/Hub-Global 2.4|Rest of East and South East Asia
+  Pakistan:
+    - IMAGE 3.3|Other Southern Asia
+    - GCAM-CGS-ELEVATE|Pakistan
+    - MESSAGEix-GLOBIOM 2.0|South Asia
+    - WITCH 5.0|South Asia
+    - REMIND 3.3|Other Asia
+    - AIM/Hub-Global 2.4|Rest of Asia
+  Brazil:
+    - IMAGE 3.3|Brazil
+    - GCAM-CGS-ELEVATE|Brazil
+    - MESSAGEix-GLOBIOM 2.0|Latin America and the Caribbean
+    - WITCH 5.0|Brazil
+    - REMIND 3.3|Latin America and the Caribbean
+    - AIM/Hub-Global 2.4|Brazil
+  Poland:
+    - IMAGE 3.3|Central Europe
+    - GCAM-CGS-ELEVATE|EU-12
+    - MESSAGEix-GLOBIOM 2.0|Eastern Europe
+    - WITCH 5.0|Europe (EU+EFTA+Balkan Countries and Turkey)
+    - REMIND 3.3|EU 28
+    - AIM/Hub-Global 2.4|EU
   Europe:
     - Europe (R10)
 
