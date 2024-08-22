@@ -54,6 +54,7 @@ calculator.convert_to_indicator_xr()
 # PLOT RESULTS
 # =========================================================== #
 
-# plotter = class_plotting()
-# plotter.plot_variables()
-# plotter.plot_indicators()
+plotter = class_plotting()
+plotter.plot_variables()
+plotter.plot_variables_norm()
+plotter.plot_indicators()
