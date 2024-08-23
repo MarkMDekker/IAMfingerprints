@@ -4,6 +4,7 @@ Calculations/process_image_example.ipynb
 Data/Own_model/IMAGE_example_raw.xlsx
 InteractiveFingerprinting/Data/elevate-internal_snapshot_*
 InteractiveFingerprinting/Data/xr_*
+#InteractiveFingerprinting/Data/processed/*
 InteractiveFingerprinting/Figures/*
 InteractiveFingerprinting/database_credentials.yaml
 
