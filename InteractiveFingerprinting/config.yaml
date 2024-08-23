@@ -30,79 +30,157 @@ database:
 # INDICATORS, NAMES AND EXPLANATIONS
 # ============================================== #
 
+indicators_to_exclude:
+  - R2_time
+  - R4_sensprim
+  - R5_sensdem
+  - C1_cost
+
 indicators:
   R1_rai:
     name: Relative abatement index
-    explanation: Relative change of CO<sub>2</sub> emissions compared to a current policies scenario
+    explanation: Relative change of CO<sub>2</sub> emissions (from energy and industrial processes) compared to 2020 values. Positive means that CO<sub>2</sub> is reducing.
+    plottype: line
+    axisnorm: n
+    horline: y
   R2_time:
     name: Time scale of carbon price response
     explanation: Number of years before 66% reduction in CO<sub>2</sub> emissions between 2020 and 2050
+    plottype: bar
+    axisnorm: n
+    horline: n
   R3_speedmax:
     name: Maximum mitigation speed
     explanation: Maximum of CO<sub>2</sub> emission reductions in 5-year increments between 2020 and 2050
+    plottype: bar
+    axisnorm: n
+    horline: n
   R4_sensprim:
     name: Sensitivity primary energy mix
     explanation: Average (normalized) scenario variance in all primary energy carriers
+    plottype: line
+    axisnorm: y
+    horline: n
   R5_sensdem:
     name: Sensitivity final energy consumption in demand sectors
     explanation: Average (normalized) scenario variance in final energy demand across end-use sectors
+    plottype: line
+    axisnorm: y
+    horline: n
   M1_cir:
     name: Carbon intensity reduction
     explanation: Reduction in carbon intensity (i.e., CO<sub>2</sub> emissions per unit of final energy demand)
+    plottype: line
+    axisnorm: y
+    horline: y
   M2_eir:
     name: Energy intensity reduction
     explanation: Reduction in energy intensity (i.e., final energy demand per unit of GDP)
+    plottype: line
+    axisnorm: y
+    horline: y
   M3_cc:
     name: Carbon capture
     explanation: CO<sub>2</sub> emissions captured, including DAC, BECCS and fossil fuel use with carbon capture
+    plottype: line
+    axisnorm: n
+    horline: n
   M4_nonco2:
     name: Role of non-CO<sub>2</sub> abatement
-    explanation: Non-CO<sub>2</sub> emissions reduction divided by CO<sub>2</sub> emission reduction (only from the energy sector)
+    explanation: Non-CO<sub>2</sub> emissions reduction (2020 value minus 2050 value) divided by CO<sub>2</sub> emission reduction (2020 value minus 2050 value). All emissions are looked at here (also from land use). Positive values are expected if both non-CO2 and CO2 reduce. Higher values indicate a larger role of non-CO2 abatement. Negative values indicate non-CO2 increase rather than decrease (for interpretation purposes, potential but rare CO2 increases are omitted from this indicator).
+    plottype: bar
+    axisnorm: y
+    horline: y
   ES1_coal:
     name: Coal share in energy mix
     explanation: Share of coal in primary energy supply
+    plottype: line
+    axisnorm: y
+    horline: n
   ES2_oil:
     name: Oil share in energy mix
     explanation: Share of oil in primary energy supply
+    plottype: line
+    axisnorm: y
+    horline: n
   ES3_gas:
     name: Gas share in energy mix
     explanation: Share of gas in primary energy supply
+    plottype: line
+    axisnorm: y
+    horline: n
   ES4_solar:
     name: Solar share in energy mix
     explanation: Share of solar energy in primary energy supply
+    plottype: line
+    axisnorm: y
+    horline: n
   ES5_wind:
     name: Wind share in energy mix
     explanation: Share of wind energy in primary energy supply
+    plottype: line
+    axisnorm: y
+    horline: n
   ES6_biomass:
     name: Biomass share in energy mix
     explanation: Share of biomass energy in primary energy supply
+    plottype: line
+    axisnorm: y
+    horline: n
   ES7_nuclear:
     name: Nuclear share in energy mix
     explanation: Share of nuclear energy in primary energy supply
+    plottype: line
+    axisnorm: y
+    horline: n
   ED1_etrans:
     name: Electrification of transport
     explanation: Share of electricity in final energy demand for transport
+    plottype: line
+    axisnorm: y
+    horline: n
   ED2_eindus:
     name: Electrification of industry
     explanation: Share of electricity in final energy demand for industry
+    plottype: line
+    axisnorm: y
+    horline: n
   ED3_ebuild:
     name: Electrification of buildings
     explanation: Share of electricity in final energy demand in the residential and commercial sector
+    plottype: line
+    axisnorm: y
+    horline: n
   ED4_emise:
     name: Net electricity emissions
     explanation: Net emissions from electricity generation, accounting for CCS
+    plottype: line
+    axisnorm: n
+    horline: n
   ED5_hydrogen:
     name: Hydrogen use
     explanation: Share of hydrogen in final energy use
+    plottype: line
+    axisnorm: y
+    horline: n
   C1_cost:
     name: Cumulative costs per abatement value
     explanation: Cumulative additional costs divided by the cumulative sum of carbon prices times the marginal CO<sub>2</sub> emission reductions (over period 2020-2050)
+    plottype: bar
+    axisnorm: y
+    horline: n
   C2_ti:
     name: Transformation index
     explanation: Sum of absolute changes in primary energy carrier fraction between 2020 and 2050
+    plottype: bar
+    axisnorm: y
+    horline: n
   C3_dem:
     name: Demand shifts
     explanation: Sum of absolute changes in final energy demand in end-use sectors between 2020 and 2050
+    plottype: bar
+    axisnorm: y
+    horline: n
 
 # ============================================== #
 # LISTS OF SCENARIOS, REGIONS, MODELS AND VARIABLES

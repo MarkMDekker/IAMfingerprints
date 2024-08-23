@@ -34,10 +34,10 @@ class class_calculation:
         #       R1       #
         # ============== #
         self.dummy_xr = self.xr_data.assign(R1_rai = (self.xr_data.sel(Variable = self.settings['params']['emissionvar'],
-                                                                      Scenario=self.curpol).Value -
+                                                                       Time=[2017, 2018, 2019, 2020, 2021]).Value.mean(dim=['Scenario', 'Time']) -
                                                      self.xr_data.sel(Variable = self.settings['params']['emissionvar']).Value) /
                                                      self.xr_data.sel(Variable = self.settings['params']['emissionvar'],
-                                                                       Scenario=self.curpol).Value)
+                                                                       Time=[2017, 2018, 2019, 2020, 2021]).Value.mean(dim=['Scenario', 'Time']))
         
         # ============== #
         #       R2       #
@@ -139,11 +139,11 @@ class class_calculation:
         CI = self.dummy_xr.sel(Variable = self.settings['params']['emissionvar']).Value / self.dummy_xr.sel(Variable = "Final Energy").Value
         self.dummy_xr = self.dummy_xr.assign(M1_cir = (CI.sel(Time = [2017, 2018, 2019, 2020, 2021],
                                                               Model=self.models_ref,
-                                                              Scenario=self.settings['scenarios']).mean(dim=["Time", "Model", "Scenario"]) -
+                                                              Scenario=self.settings['scenarios']).mean(dim=["Time", "Scenario"]) -
                                                        CI) /
                                                        CI.sel(Time = [2017, 2018, 2019, 2020, 2021],
                                                               Model=self.models_ref,
-                                                              Scenario=self.settings['scenarios']).mean(dim=["Time", "Model", "Scenario"]))
+                                                              Scenario=self.settings['scenarios']).mean(dim=["Time", "Scenario"]))
         
         # ============== #
         #       M2       #
@@ -151,11 +151,11 @@ class class_calculation:
         EI = self.dummy_xr.sel(Variable = "Final Energy").Value / self.dummy_xr.sel(Variable = "GDP|PPP").Value
         self.dummy_xr = self.dummy_xr.assign(M2_eir = (EI.sel(Time = [2017, 2018, 2019, 2020, 2021],
                                                               Model=self.models_ref,
-                                                              Scenario=self.settings['scenarios']).mean(dim=["Time", "Model", "Scenario"]) -
+                                                              Scenario=self.settings['scenarios']).mean(dim=["Time", "Scenario"]) -
                                                        EI) /
                                                        EI.sel(Time = [2017, 2018, 2019, 2020, 2021],
                                                               Model=self.models_ref,
-                                                              Scenario=self.settings['scenarios']).mean(dim=["Time", "Model", "Scenario"]))
+                                                              Scenario=self.settings['scenarios']).mean(dim=["Time", "Scenario"]))
         
         # ============== #
         #       M3       #
@@ -167,14 +167,15 @@ class class_calculation:
         # ============== #
         nonco2 = self.dummy_xr.sel(Variable="Emissions|Kyoto Gases").Value - self.dummy_xr.sel(Variable="Emissions|CO2").Value
         co2 = self.dummy_xr.sel(Variable="Emissions|CO2").Value
+        dco2 = co2.sel(Time = [2017, 2018, 2019, 2020, 2021],
+                        Model=self.models_ref,
+                        Scenario=self.settings['scenarios']).mean(dim=["Time", "Scenario"]) - co2.sel(Time=2050)
+        dco2_ref = dco2.where(dco2 > 0)
         self.dummy_xr = self.dummy_xr.assign(M4_nonco2 = (nonco2.sel(Time = [2017, 2018, 2019, 2020, 2021],
-                                                                     Model=self.models_ref,
-                                                                     Scenario=self.settings['scenarios']).mean(dim=["Time", "Model", "Scenario"]) -
-                                                          nonco2.sel(Time=2050)) / (
-                                                          co2.sel(Time = [2017, 2018, 2019, 2020, 2021],
-                                                                  Model=self.models_ref,
-                                                                  Scenario=self.settings['scenarios']).mean(dim=["Time", "Model", "Scenario"]) - co2.sel(Time=2050)))
-    
+                                                                        Model=self.models_ref,
+                                                                        Scenario=self.settings['scenarios']).mean(dim=["Time", "Scenario"]) -
+                                                            nonco2.sel(Time=2050)) / dco2_ref)
+
     def calculate_energysupply_indicators(self):
         print('- Calculating energy supply indicators')
         # ============== #
