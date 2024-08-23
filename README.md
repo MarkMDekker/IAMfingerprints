@@ -3,6 +3,9 @@ Suite for energy model diagnostics. Latest release can be found on Zenodo:
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8220167.svg)](https://doi.org/10.5281/zenodo.8220167)
 
+## Analyze own fingerprint
+For the purpose of comparing any single scenario (e.g., from your own model) to any given reference scenario dataset (e.g., from a project), we created some code in the folder Interactive Fingerprinting. A step-by-step manual and recordings of a workshop where this is used will be shared soon. There is also a [`Compute_own_fingerprint.ipynb`] notebook in the Calculations folder that can be used to analyze scenarios similar to in the paper.
+
 ## Setup
 You can set up the code by using `conda create --name <env> --file requirements.txt` in your command prompt, where `<env>` is the name of your conda environment you want to create for this. (The requirements file may contain a number of packages that are not used here.)
 
