@@ -4,7 +4,9 @@ Calculations/process_image_example.ipynb
 Data/Own_model/IMAGE_example_raw.xlsx
 InteractiveFingerprinting/Data/elevate-internal_snapshot_*
 InteractiveFingerprinting/Data/xr_*
+InteractiveFingerprinting/Data/MyScenario.csv
 InteractiveFingerprinting/Figures/*
+InteractiveFingerprinting/database_credentials.yaml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
