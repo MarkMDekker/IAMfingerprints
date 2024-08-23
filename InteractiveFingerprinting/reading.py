@@ -68,7 +68,7 @@ class class_reading:
         self.xr_data_ref = xr.open_dataset('Data/xr_variables_reference.nc')
 
         # Read data from the csv file
-        df = pd.read_csv("K:/Code/IAMfingerprints/InteractiveFingerprinting/Data/MyScenario.csv",
+        df = pd.read_csv("Data/MyScenario.csv",
                          quotechar='"',
                          delimiter=',',
                          encoding='utf-8')
