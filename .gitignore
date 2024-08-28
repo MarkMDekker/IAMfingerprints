@@ -5,6 +5,8 @@ Data/Own_model/IMAGE_example_raw.xlsx
 InteractiveFingerprinting/Data/elevate-internal_snapshot_*
 InteractiveFingerprinting/Data/xr_*
 InteractiveFingerprinting/Data/MyScenario.csv
+InteractiveFingerprinting/Data/MyScenario2.csv
+InteractiveFingerprinting/Data/MyScenario3.csv
 InteractiveFingerprinting/Figures/*
 InteractiveFingerprinting/database_credentials.yaml
 

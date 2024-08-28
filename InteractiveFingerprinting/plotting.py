@@ -98,7 +98,7 @@ class class_plotting:
                                     row=int(np.floor(r_i/4)+1),
                                     col=int(1+np.mod(r_i, 4)))
 
-        fig.update_layout(title=f'<b>{start_var}</b> under <b>{scen}</b> compared to current policies (dashed)',)
+        fig.update_layout(title=f'<b>{start_var}</b> under <b>{scen}</b> (including your scenario) compared to current policies (dashed)',)
         # DROPDOWN
         fig.update_layout(
             updatemenus=[
@@ -117,7 +117,7 @@ class class_plotting:
                                          ]+[np.array(self.xr_data.sel(Variable=var, Region=reg, Model=m, Scenario=scen).Value) for m in self.models_ref for reg in np.array(self.xr_data.Region)
                                          ]+[np.array(self.xr_data.sel(Variable=var, Region=reg, Model=self.model_ind, Scenario=scen).Value) for reg in np.array(self.xr_data.Region)
                                         ]},
-                                {'title.text': f'<b>{var}</b> under <b>{scen}</b> compared to current policies (dashed)', "yaxis.title.text": ''}], #
+                                {'title.text': f'<b>{var}</b> under <b>{scen}</b> (including your scenario) compared to current policies (dashed)', "yaxis.title.text": ''}], #
                         ) for var in available_var]
                 },
             ]
@@ -213,7 +213,7 @@ class class_plotting:
                                     row=int(np.floor(r_i/4)+1),
                                     col=int(1+np.mod(r_i, 4)))
 
-        fig.update_layout(title=f'<b>{start_var}</b> under <b>{scen}</b> compared to current policies (dashed)',)
+        fig.update_layout(title=f'<b>{start_var}</b> under <b>{scen}</b> (including your scenario) compared to current policies (dashed)',)
         # DROPDOWN
         fig.update_layout(
             updatemenus=[
@@ -231,7 +231,7 @@ class class_plotting:
                                          ]+[np.array(self.xr_data.sel(Variable=var, Region=reg, Model=self.model_ind, Scenario="ELV-SSP2-CP-D0").Value / self.xr_data.sel(Time=2015, Variable=var, Region=reg, Model=self.model_ind, Scenario="ELV-SSP2-CP-D0").Value) for reg in np.array(self.xr_data.Region)
                                          ]+[np.array(self.xr_data.sel(Variable=var, Region=reg, Model=m, Scenario=scen).Value / self.xr_data.sel(Time=2015, Variable=var, Region=reg, Model=m, Scenario=scen).Value) for m in self.models_ref for reg in np.array(self.xr_data.Region)
                                          ]+[np.array(self.xr_data.sel(Variable=var, Region=reg, Model=self.model_ind, Scenario=scen).Value / self.xr_data.sel(Time=2015, Variable=var, Region=reg, Model=self.model_ind, Scenario=scen).Value) for reg in np.array(self.xr_data.Region)
-                                        ]},{'title.text': f'<b>{var}</b> under <b>{scen}</b> compared to current policies (dashed)', "yaxis.title.text": ''}], #
+                                        ]},{'title.text': f'<b>{var}</b> under <b>{scen}</b> (including your scenario) compared to current policies (dashed)', "yaxis.title.text": ''}], #
                         ) for var in available_var]
                 },
             ]
@@ -465,10 +465,10 @@ class class_plotting:
 
         with open('Figures/Indicators.html', 'a') as f:
             f.write(html_w('<h1>')+'Indicators</p></h1>')
-            f.write(html_w('<body>')+'This page contains the results of the indicators from the ELEVATE poject. The ELV-SSP2-NDC-D0 scenario is used here. Please note that in some plots, the panels have similar axes, but not in all of them.</p></body>')
+            f.write(html_w('<body>')+'This page contains the results of the indicators from the ELEVATE poject. The ELV-SSP2-NDC-D0 scenario is used here (together with your own scenario). Please note that in some plots, the panels have similar axes, but not in all of them.</p></body>')
     
             f.write(html_w('<h1>')+'Summary</p></h1>')
-            f.write(html_w('<body>')+'2050 values of all indicators in scenario <b>'+scen+'</b> and region <b>'+self.key_region+'</b> (for this plot we automatically pick the first region in your file).</p></body>')
+            f.write(html_w('<body>')+'2050 values of all indicators in region <b>'+self.key_region+'</b> (for this plot we automatically pick the first region in your file).</p></body>')
             f.write(sum_fig.to_html(full_html=False, include_plotlyjs='cdn'))
             for n_i in range(len(figs)):
                 ind = indicators_to_include[n_i]

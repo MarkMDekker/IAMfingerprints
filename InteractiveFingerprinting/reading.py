@@ -103,10 +103,11 @@ class class_reading:
             xr_data = xr_data.sel(Scenario=['ELV-SSP2-NDC-D0-N'])
             xr_data = xr_data.assign_coords(Scenario=['ELV-SSP2-NDC-D0'])
         else:
-            try:
+            try: # if there is only one scenario
                 xr_data = xr_data.assign_coords(Scenario=['ELV-SSP2-NDC-D0'])
-            except ValueError:
-                xr_data = xr_data.sel(Scenario=['ELV-SSP2-NDC-D0'])
+            except ValueError: # if there are more, use the first
+                xr_data = xr_data.sel(Scenario=[np.array(xr_data.Scenario)[0]])
+                xr_data = xr_data.assign_coords(Scenario=['ELV-SSP2-NDC-D0'])
 
         # Some reindexing of time
         xr_data = xr_data.reindex(Time = np.arange(2005, 2101)).interpolate_na(dim="Time", method="linear")
@@ -114,5 +115,9 @@ class class_reading:
                                 Variable=[x for x in self.settings['required_variables'] if x in xr_data['Variable'].values])
 
         # Concatenate the reference data with the new data
-        self.xr_data_tot = xr.merge([self.xr_data_ref, xr_data])
+        try:
+            self.xr_data_tot = xr.merge([self.xr_data_ref, xr_data])
+        except: # if model name already in reference:
+            xr_data = xr_data.assign_coords({'Model': [list(df.Model)[0] + " (myscenario)"]})
+            self.xr_data_tot = xr.merge([self.xr_data_ref, xr_data])
         self.xr_data_tot.to_netcdf("Data/xr_variables.nc")
