@@ -68,16 +68,20 @@ class class_reading:
         self.xr_data_ref = xr.open_dataset('Data/xr_variables_reference.nc')
 
         # Read data from the csv file
-        df = pd.read_csv("Data/MyScenario.csv",
-                         quotechar='"',
-                         delimiter=',',
-                         encoding='utf-8')
-
-        # Remove last row
-        df2 = df.iloc[:-1]
+        try:
+            df = pd.read_csv("Data/MyScenario.csv",
+                                quotechar='"',
+                                delimiter=',',
+                                encoding='utf-8')
+        except:
+            print('  Attention: a problem occurred while reading the data from MyScenario.csv. Now trying to resolve using a semicolon delimiter...')
+            df = pd.read_csv("Data/MyScenario.csv",
+                                quotechar='"',
+                                delimiter=';',
+                                encoding='utf-8')
 
         # Remove Unit column
-        df2 = df2.drop('Unit', axis=1)
+        df2 = df.drop('Unit', axis=1)
 
         # Transform the columns with years into a single column called Time
         df2 = pd.melt(df2, id_vars=['Model', 'Scenario', 'Region', 'Variable'], var_name='Time', value_name='Value')
@@ -94,13 +98,20 @@ class class_reading:
         # Change the type of the Value variable to float
         xr_data = xr_data.assign(Value=xr_data.Value.astype(float))
 
-        # Remove final two characters of all scenario names
-        xr_data = xr_data.assign_coords(Scenario=[x[:-2] for x in xr_data.Scenario.values])
+        # Set scenario name
+        if np.array(xr_data.Model)[0] == 'BLUES 2.0':
+            xr_data = xr_data.sel(Scenario=['ELV-SSP2-NDC-D0-N'])
+            xr_data = xr_data.assign_coords(Scenario=['ELV-SSP2-NDC-D0'])
+        else:
+            try:
+                xr_data = xr_data.assign_coords(Scenario=['ELV-SSP2-NDC-D0'])
+            except ValueError:
+                xr_data = xr_data.sel(Scenario=['ELV-SSP2-NDC-D0'])
 
         # Some reindexing of time
         xr_data = xr_data.reindex(Time = np.arange(2005, 2101)).interpolate_na(dim="Time", method="linear")
         xr_data = xr_data.sel(Scenario=[x for x in self.settings['scenarios'] if x in xr_data['Scenario'].values],
-                              Variable=[x for x in self.settings['required_variables'] if x in xr_data['Variable'].values])
+                                Variable=[x for x in self.settings['required_variables'] if x in xr_data['Variable'].values])
 
         # Concatenate the reference data with the new data
         self.xr_data_tot = xr.merge([self.xr_data_ref, xr_data])

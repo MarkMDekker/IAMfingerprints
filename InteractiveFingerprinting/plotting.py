@@ -32,10 +32,14 @@ class class_plotting:
         self.models_ref = self.settings['models']
         # find the model that is in self.models_all but not in self.models_ref
         self.model_ind = [x for x in self.models_all if x not in self.models_ref][0]
+        df = pd.read_csv("Data/MyScenario.csv",
+                    quotechar='"',
+                    delimiter=',',
+                    encoding='utf-8')
+        self.key_region = list(df.Region)[0]
     
     def plot_variables(self):
         print('- Plotting variables into /Figures/VariableData.html')
-        start_reg = 'China'
         scen = 'ELV-SSP2-NDC-D0'
         start_var = "Primary Energy|Wind"
         available_var = np.array([x for x in self.settings['required_variables'] if x in self.xr_data['Variable'].values])
@@ -147,7 +151,6 @@ class class_plotting:
     
     def plot_variables_norm(self):
         print('- Plotting normalized variables into /Figures/VariableData_norm.html')
-        start_reg = 'China'
         scen = 'ELV-SSP2-NDC-D0'
         start_var = "Primary Energy|Wind"
         available_var = np.array([x for x in self.settings['required_variables'] if x in self.xr_data['Variable'].values])
@@ -268,7 +271,6 @@ class class_plotting:
 
         scen = 'ELV-SSP2-NDC-D0'
         xrset = self.xr_ind.sel(Time=np.arange(2010, 2051))
-        key_region = np.array(self.xr_data.Region)[np.where(~np.isnan(self.xr_data.sel(Model=self.model_ind, Time=2050, Scenario=scen, Variable='Primary Energy|Coal').Value))[0]][0]
 
         # Only 2050
         sum_fig = make_subplots(rows=1, cols=1,
@@ -282,12 +284,12 @@ class class_plotting:
             xr_use = xr_normed.sel(Indicator=ind, Time=2050)
             name = self.settings['indicators'][ind]['name']
             sum_fig.add_trace(go.Box(
-                                x=np.array(xr_use.sel(Scenario=scen, Region=key_region).Value),
+                                x=np.array(xr_use.sel(Scenario=scen, Region=self.key_region).Value),
                                 y=[name]*len(xr_use.Model),
                                 showlegend=False, line=dict(color='silver')), row=1, col=1)
             for m_i, m in enumerate(self.models_ref):
                 sum_fig.add_trace(go.Scatter(y=[name],
-                                        x=[xr_use.sel(Scenario=scen, Region=key_region, Model=m).Value],
+                                        x=[xr_use.sel(Scenario=scen, Region=self.key_region, Model=m).Value],
                                         showlegend=([True]+[False]*30)[ind_i],
                                         mode='markers',
                                         marker=dict(size=13),
@@ -296,7 +298,7 @@ class class_plotting:
                                         row=1,
                                         col=1)
             sum_fig.add_trace(go.Scatter(y=[name],
-                                    x=[xr_use.sel(Scenario=scen, Region=key_region, Model=self.model_ind).Value],
+                                    x=[xr_use.sel(Scenario=scen, Region=self.key_region, Model=self.model_ind).Value],
                                     showlegend=([True]+[False]*30)[ind_i],
                                     mode='markers',
                                     marker=dict(size=25, symbol='x'),
@@ -466,7 +468,7 @@ class class_plotting:
             f.write(html_w('<body>')+'This page contains the results of the indicators from the ELEVATE poject. The ELV-SSP2-NDC-D0 scenario is used here. Please note that in some plots, the panels have similar axes, but not in all of them.</p></body>')
     
             f.write(html_w('<h1>')+'Summary</p></h1>')
-            f.write(html_w('<body>')+'2050 values of all indicators in scenario <b>'+scen+'</b> and region <b>'+key_region+'</b></p></body>')
+            f.write(html_w('<body>')+'2050 values of all indicators in scenario <b>'+scen+'</b> and region <b>'+self.key_region+'</b> (for this plot we automatically pick the first region in your file).</p></body>')
             f.write(sum_fig.to_html(full_html=False, include_plotlyjs='cdn'))
             for n_i in range(len(figs)):
                 ind = indicators_to_include[n_i]
@@ -474,3 +476,6 @@ class class_plotting:
                 f.write(html_w('<h1>')+'Indicator '+ind.split('_')[0]+': '+self.settings['indicators'][ind]['name']+'</p></h1>')
                 f.write(html_w('<body>')+self.settings['indicators'][ind]['explanation']+'</p></body>')
                 f.write(figs[n_i].to_html(full_html=False, include_plotlyjs='cdn'))
+
+        self.xr_data.close()
+        self.xr_ind.close()
