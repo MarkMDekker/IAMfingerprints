@@ -54,7 +54,8 @@ class class_reading:
                                                 Variable=available_var)
         xr_datas = []
         for i in list(self.settings['regional_mapping'].keys()):
-            xr_datas.append(self.xr_data_raw_sel.sel(Region=self.settings['regional_mapping'][i]).sum(dim='Region').expand_dims({'Region': [i]}))
+            regs = np.intersect1d(self.xr_data_raw_sel.Region, self.settings['regional_mapping'][i])
+            xr_datas.append(self.xr_data_raw_sel.sel(Region=regs).sum(dim='Region').expand_dims({'Region': [i]}))
         xr_data_new = xr.concat(xr_datas, dim='Region')
 
         # entries of zero fill with nan
@@ -66,19 +67,31 @@ class class_reading:
     def read_data_local(self):
         print('- Reading reference and your own scenario from local data and saving to xr_variables.nc')
         self.xr_data_ref = xr.open_dataset('Data/xr_variables_reference.nc')
+        filename = 'MyScenario_rahel.csv'
 
         # Read data from the csv file
         try:
-            df = pd.read_csv("Data/MyScenario_elena.csv",
+            df = pd.read_csv("Data/"+filename,
                                 quotechar='"',
                                 delimiter=',',
                                 encoding='utf-8')
-        except:
-            print('  Attention: a problem occurred while reading the data from MyScenario.csv. Now trying to resolve using a semicolon delimiter...')
-            df = pd.read_csv("Data/MyScenario.csv",
+        except UnicodeDecodeError:
+            df = pd.read_csv("Data/"+filename,
                                 quotechar='"',
-                                delimiter=';',
-                                encoding='utf-8')
+                                delimiter=',',
+                                encoding='latin')
+
+        if len(df.keys()) == 1:
+            try:
+                df = pd.read_csv("Data/"+filename,
+                                    quotechar='"',
+                                    delimiter=';',
+                                    encoding='utf-8')
+            except UnicodeDecodeError:
+                df = pd.read_csv("Data/"+filename,
+                                    quotechar='"',
+                                    delimiter=';',
+                                    encoding='latin')
 
         # Remove Unit column
         df2 = df.drop('Unit', axis=1)

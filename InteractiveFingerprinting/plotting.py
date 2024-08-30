@@ -32,11 +32,30 @@ class class_plotting:
         self.models_ref = self.settings['models']
         # find the model that is in self.models_all but not in self.models_ref
         self.model_ind = [x for x in self.models_all if x not in self.models_ref][0]
-        df = pd.read_csv("Data/MyScenario_elena.csv",
-                    quotechar='"',
-                    delimiter=',',
-                    encoding='utf-8')
-        self.key_region = list(df.Region)[0]
+        filename = 'MyScenario_rahel.csv'
+        try:
+            df = pd.read_csv("Data/"+filename,
+                                quotechar='"',
+                                delimiter=',',
+                                encoding='utf-8')
+        except UnicodeDecodeError:
+            df = pd.read_csv("Data/"+filename,
+                                quotechar='"',
+                                delimiter=',',
+                                encoding='latin')
+
+        if len(df.keys()) == 1:
+            try:
+                df = pd.read_csv("Data/"+filename,
+                                    quotechar='"',
+                                    delimiter=';',
+                                    encoding='utf-8')
+            except UnicodeDecodeError:
+                df = pd.read_csv("Data/"+filename,
+                                    quotechar='"',
+                                    delimiter=';',
+                                    encoding='latin')
+        self.key_region = str(self.xr_data.Region[np.where(~np.isnan(self.xr_data.sel(Model=df.Model[0]).Value))[1]][0].values)
     
     def plot_variables(self):
         print('- Plotting variables into /Figures/VariableData.html')

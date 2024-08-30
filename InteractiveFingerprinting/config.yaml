@@ -212,6 +212,7 @@ regional_mapping:
     - WITCH 5.0|China
     - REMIND 3.3|China and Taiwan
     - AIM/Hub-Global 2.4|China
+    - CHA
   India:
     - IMAGE 3.3|India
     - GCAM-CGS-ELEVATE|India
@@ -219,6 +220,7 @@ regional_mapping:
     - WITCH 5.0|India
     - REMIND 3.3|India
     - AIM/Hub-Global 2.4|India
+    - IND
   Indonesia:
     - IMAGE 3.3|Indonesia
     - GCAM-CGS-ELEVATE|Indonesia
@@ -226,6 +228,7 @@ regional_mapping:
     - WITCH 5.0|Indonesia
     - REMIND 3.3|Other Asia
     - AIM/Hub-Global 2.4|Rest of East and South East Asia
+    - OAS
   Saudi-Arabia:
     - IMAGE 3.3|Middle East
     - GCAM-CGS-ELEVATE|Middle East
@@ -233,6 +236,7 @@ regional_mapping:
     - WITCH 5.0|Middle East and North Africa
     - REMIND 3.3|Middle East and North Africa
     - AIM/Hub-Global 2.4|Middle East
+    - MEA
   Viet Nam:
     - IMAGE 3.3|South-East Asia
     - GCAM-CGS-ELEVATE|Southeast Asia
@@ -240,6 +244,7 @@ regional_mapping:
     - WITCH 5.0|South East Asia
     - REMIND 3.3|Other Asia
     - AIM/Hub-Global 2.4|Rest of East and South East Asia
+    - OAS
   Pakistan:
     - IMAGE 3.3|Other Southern Asia
     - GCAM-CGS-ELEVATE|Pakistan
@@ -247,6 +252,7 @@ regional_mapping:
     - WITCH 5.0|South Asia
     - REMIND 3.3|Other Asia
     - AIM/Hub-Global 2.4|Rest of Asia
+    - OAS
   Brazil:
     - IMAGE 3.3|Brazil
     - GCAM-CGS-ELEVATE|Brazil
@@ -254,6 +260,7 @@ regional_mapping:
     - WITCH 5.0|Brazil
     - REMIND 3.3|Latin America and the Caribbean
     - AIM/Hub-Global 2.4|Brazil
+    - LAM
   Poland:
     - IMAGE 3.3|Central Europe
     - GCAM-CGS-ELEVATE|EU-12
@@ -261,8 +268,10 @@ regional_mapping:
     - WITCH 5.0|Europe (EU+EFTA+Balkan Countries and Turkey)
     - REMIND 3.3|EU 28
     - AIM/Hub-Global 2.4|EU
+    - EUR
   Europe:
     - Europe (R10)
+    - EUR
 
 models:
   - AIM/Hub-Global 2.4
