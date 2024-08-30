@@ -26,13 +26,13 @@ class class_plotting:
         print('STARTING PLOTTING')
         with open("config.yaml", "r") as stream:
             self.settings = yaml.load(stream, Loader=yaml.Loader)
-        self.xr_data = xr.open_dataset('Data/xr_variables.nc')
-        self.xr_ind = xr.open_dataset('Data/xr_indicators.nc')
+        self.xr_data = xr.open_dataset('Data/xr_variables.nc').sel(Region=self.settings['regions'])
+        self.xr_ind = xr.open_dataset('Data/xr_indicators.nc').sel(Region=self.settings['regions'])
         self.models_all = self.xr_data.Model.values
         self.models_ref = self.settings['models']
         # find the model that is in self.models_all but not in self.models_ref
         self.model_ind = [x for x in self.models_all if x not in self.models_ref][0]
-        df = pd.read_csv("Data/MyScenario.csv",
+        df = pd.read_csv("Data/MyScenario_elena.csv",
                     quotechar='"',
                     delimiter=',',
                     encoding='utf-8')

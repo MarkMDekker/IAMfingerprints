@@ -69,7 +69,7 @@ class class_reading:
 
         # Read data from the csv file
         try:
-            df = pd.read_csv("Data/MyScenario.csv",
+            df = pd.read_csv("Data/MyScenario_elena.csv",
                                 quotechar='"',
                                 delimiter=',',
                                 encoding='utf-8')
@@ -113,6 +113,15 @@ class class_reading:
         xr_data = xr_data.reindex(Time = np.arange(2005, 2101)).interpolate_na(dim="Time", method="linear")
         xr_data = xr_data.sel(Scenario=[x for x in self.settings['scenarios'] if x in xr_data['Scenario'].values],
                                 Variable=[x for x in self.settings['required_variables'] if x in xr_data['Variable'].values])
+
+        # Map regions from xr_data onto the ten regions
+        xr_datas = []
+        for reg_i, reg in enumerate(self.settings['regions']):
+            try:
+                xr_datas.append(xr_data.sel(Region=reg).expand_dims({'Region': [reg]}))
+            except KeyError:
+                xr_datas.append(xr_data.sel(Region=np.intersect1d(xr_data.Region, self.settings['regional_mapping'][reg])[0]).expand_dims({'Region': [reg]}))
+        xr_data = xr.merge(xr_datas)
 
         # Concatenate the reference data with the new data
         try:
