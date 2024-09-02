@@ -133,7 +133,9 @@ class class_reading:
             try:
                 xr_datas.append(xr_data.sel(Region=reg).expand_dims({'Region': [reg]}))
             except KeyError:
-                xr_datas.append(xr_data.sel(Region=np.intersect1d(xr_data.Region, self.settings['regional_mapping'][reg])[0]).expand_dims({'Region': [reg]}))
+                intersect = np.intersect1d(xr_data.Region, self.settings['regional_mapping'][reg])
+                if len(intersect) > 0:
+                    xr_datas.append(xr_data.sel(Region=np.intersect1d(xr_data.Region, self.settings['regional_mapping'][reg])[0]).expand_dims({'Region': [reg]}))
         xr_data = xr.merge(xr_datas)
 
         # Concatenate the reference data with the new data
@@ -142,4 +144,5 @@ class class_reading:
         except: # if model name already in reference:
             xr_data = xr_data.assign_coords({'Model': [list(df.Model)[0] + " (myscenario)"]})
             self.xr_data_tot = xr.merge([self.xr_data_ref, xr_data])
+        self.xr_data_tot = self.xr_data_tot.assign_coords(Model=self.xr_data_tot.Model.astype(object))
         self.xr_data_tot.to_netcdf("Data/xr_variables.nc")
