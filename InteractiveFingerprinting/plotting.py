@@ -55,7 +55,11 @@ class class_plotting:
                                     quotechar='"',
                                     delimiter=';',
                                     encoding='latin')
-        self.key_region = str(self.xr_data.Region[np.where(~np.isnan(self.xr_data.sel(Model=df.Model[0]).Value))[1]][0].values)
+        if df.Model[0] in self.models_ref:
+            model_tocheck = df.Model[0]+' (myscenario)'
+        else:
+            model_tocheck = df.Model[0]
+        self.key_region = str(self.xr_data.Region[np.where(~np.isnan(self.xr_data.sel(Model=model_tocheck).Value))[1]][0].values)
     
     def plot_variables(self):
         print('- Plotting variables into /Figures/VariableData.html')
