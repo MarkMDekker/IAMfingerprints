@@ -67,7 +67,7 @@ class class_reading:
     def read_data_local(self):
         print('- Reading reference and your own scenario from local data and saving to xr_variables.nc')
         self.xr_data_ref = xr.open_dataset('Data/xr_variables_reference.nc')
-        filename = 'MyScenario_rahel.csv'
+        filename = 'MyScenario.csv'
 
         # Read data from the csv file
         try:

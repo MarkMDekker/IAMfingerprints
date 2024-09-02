@@ -32,7 +32,7 @@ class class_plotting:
         self.models_ref = self.settings['models']
         # find the model that is in self.models_all but not in self.models_ref
         self.model_ind = [x for x in self.models_all if x not in self.models_ref][0]
-        filename = 'MyScenario_rahel.csv'
+        filename = 'MyScenario.csv'
         try:
             df = pd.read_csv("Data/"+filename,
                                 quotechar='"',
