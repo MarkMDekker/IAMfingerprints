@@ -213,6 +213,7 @@ regional_mapping:
     - REMIND 3.3|China and Taiwan
     - AIM/Hub-Global 2.4|China
     - CHA
+    - COFFEE 1.5|China
   India:
     - IMAGE 3.3|India
     - GCAM-CGS-ELEVATE|India
@@ -221,6 +222,7 @@ regional_mapping:
     - REMIND 3.3|India
     - AIM/Hub-Global 2.4|India
     - IND
+    - COFFEE 1.5|India
   Indonesia:
     - IMAGE 3.3|Indonesia
     - GCAM-CGS-ELEVATE|Indonesia
@@ -229,6 +231,7 @@ regional_mapping:
     - REMIND 3.3|Other Asia
     - AIM/Hub-Global 2.4|Rest of East and South East Asia
     - OAS
+    - COFFEE 1.5|Rest of Asia and Oceania
   Saudi-Arabia:
     - IMAGE 3.3|Middle East
     - GCAM-CGS-ELEVATE|Middle East
@@ -237,6 +240,7 @@ regional_mapping:
     - REMIND 3.3|Middle East and North Africa
     - AIM/Hub-Global 2.4|Middle East
     - MEA
+    - COFFEE 1.5|Caspian Region
   Viet Nam:
     - IMAGE 3.3|South-East Asia
     - GCAM-CGS-ELEVATE|Southeast Asia
@@ -245,6 +249,7 @@ regional_mapping:
     - REMIND 3.3|Other Asia
     - AIM/Hub-Global 2.4|Rest of East and South East Asia
     - OAS
+    - COFFEE 1.5|Rest of Asia and Oceania
   Pakistan:
     - IMAGE 3.3|Other Southern Asia
     - GCAM-CGS-ELEVATE|Pakistan
@@ -253,6 +258,7 @@ regional_mapping:
     - REMIND 3.3|Other Asia
     - AIM/Hub-Global 2.4|Rest of Asia
     - OAS
+    - COFFEE 1.5|Middle East
   Brazil:
     - IMAGE 3.3|Brazil
     - GCAM-CGS-ELEVATE|Brazil
@@ -261,12 +267,14 @@ regional_mapping:
     - REMIND 3.3|Latin America and the Caribbean
     - AIM/Hub-Global 2.4|Brazil
     - LAM
+    - COFFEE 1.5|Brazil
   Poland:
     - IMAGE 3.3|Central Europe
     - GCAM-CGS-ELEVATE|EU-12
     - MESSAGEix-GLOBIOM 2.0|Eastern Europe
     - WITCH 5.0|Europe (EU+EFTA+Balkan Countries and Turkey)
     - REMIND 3.3|EU 28
+    - COFFEE 1.5|European Union
     - AIM/Hub-Global 2.4|EU
     - EUR
   Europe:
@@ -280,6 +288,7 @@ models:
   - MESSAGEix-GLOBIOM 2.0
   - REMIND 3.3
   - WITCH 5.0
+  - COFFEE 1.5
 
 required_variables:
   - Emissions|CO2|Energy and Industrial Processes

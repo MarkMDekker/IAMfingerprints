@@ -79,7 +79,7 @@ class class_plotting:
                                                             Model=m,
                                                             Scenario="ELV-SSP2-CP-D0").Value,
                                         showlegend=False,
-                                        line=dict(dash='dash', color = ['steelblue', 'tomato', 'forestgreen', 'goldenrod', 'brown', 'purple'][m_i]),
+                                        line=dict(dash='dash', color = ['steelblue', 'tomato', 'forestgreen', 'goldenrod', 'brown', 'purple', 'darkgrey'][m_i]),
                                         name=m),
                                         row=int(np.floor(r_i/4)+1),
                                         col=int(1+np.mod(r_i, 4)))
@@ -104,7 +104,7 @@ class class_plotting:
                                                             Model=m,
                                                             Scenario=scen).Value,
                                         showlegend=([True]+[False]*10)[r_i],
-                                        line=dict(color = ['steelblue', 'tomato', 'forestgreen', 'goldenrod', 'brown', 'purple'][m_i]),
+                                        line=dict(color = ['steelblue', 'tomato', 'forestgreen', 'goldenrod', 'brown', 'purple', 'darkgrey'][m_i]),
                                         name=m),
                                         row=int(np.floor(r_i/4)+1),
                                         col=int(1+np.mod(r_i, 4)))
@@ -191,7 +191,7 @@ class class_plotting:
                 fig.add_trace(go.Scatter(x=self.xr_data.Time,
                                         y=(y/y.sel(Time=2015)).Value,
                                         showlegend=False,
-                                        line=dict(dash='dash', color = ['steelblue', 'tomato', 'forestgreen', 'goldenrod', 'brown', 'purple'][m_i]),
+                                        line=dict(dash='dash', color = ['steelblue', 'tomato', 'forestgreen', 'goldenrod', 'brown', 'purple', 'darkgrey'][m_i]),
                                         name=m),
                                         row=int(np.floor(r_i/4)+1),
                                         col=int(1+np.mod(r_i, 4)))
@@ -218,7 +218,7 @@ class class_plotting:
                 fig.add_trace(go.Scatter(x=self.xr_data.Time,
                                         y=(y/y.sel(Time=2015)).Value,
                                         showlegend=([True]+[False]*10)[r_i],
-                                        line=dict(color = ['steelblue', 'tomato', 'forestgreen', 'goldenrod', 'brown', 'purple'][m_i]),
+                                        line=dict(color = ['steelblue', 'tomato', 'forestgreen', 'goldenrod', 'brown', 'purple', 'darkgrey'][m_i]),
                                         name=m),
                                         row=int(np.floor(r_i/4)+1),
                                         col=int(1+np.mod(r_i,4)))
@@ -316,7 +316,7 @@ class class_plotting:
                                         showlegend=([True]+[False]*30)[ind_i],
                                         mode='markers',
                                         marker=dict(size=13),
-                                        line=dict(color = ['steelblue', 'tomato', 'forestgreen', 'goldenrod', 'brown', 'purple'][m_i]),
+                                        line=dict(color = ['steelblue', 'tomato', 'forestgreen', 'goldenrod', 'brown', 'purple', 'darkgrey'][m_i]),
                                         name=m),
                                         row=1,
                                         col=1)
@@ -399,7 +399,7 @@ class class_plotting:
                         fig.add_trace(go.Scatter(x=xrset.Time,
                                                 y=xrset.sel(Indicator=ind, Region=r, Model=m, Scenario=scen).Value,
                                                 showlegend=([True]+[False]*10)[r_i],
-                                                line=dict(color = ['steelblue', 'tomato', 'forestgreen', 'goldenrod', 'brown', 'purple'][m_i]),
+                                                line=dict(color = ['steelblue', 'tomato', 'forestgreen', 'goldenrod', 'brown', 'purple', 'darkgrey'][m_i]),
                                                 name=m),
                                                 row=1+np.floor(r_i/5).astype(int),
                                                 col=np.mod(r_i, 5)+1)
@@ -430,7 +430,7 @@ class class_plotting:
                                                 showlegend=([True]+[False]*10)[r_i],
                                                 mode='markers',
                                                 marker=dict(size=13),
-                                                line=dict(color = ['steelblue', 'tomato', 'forestgreen', 'goldenrod', 'brown', 'purple'][m_i]),
+                                                line=dict(color = ['steelblue', 'tomato', 'forestgreen', 'goldenrod', 'brown', 'purple', 'darkgrey'][m_i]),
                                                 name=m),
                                                 row=1,
                                                 col=1)
