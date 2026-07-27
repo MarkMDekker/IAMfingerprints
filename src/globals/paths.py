@@ -9,3 +9,4 @@ database = dict(name = 'iam-diagnostics-internal',
                 password = 'none')
 
 figures = pathlib.Path(__file__).parent.parent.parent / 'Figures'
+figures_Xdrive = pathlib.Path("X:/user/dekkerm/figure_sharing/iamc-diagnostics")
